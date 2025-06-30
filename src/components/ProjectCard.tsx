@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { Github, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react'
 import { Project } from '../types/ProjectTypes';
 
+
 interface ProjectCardProps {
   project: Project;
   index: number; // For animation delay
@@ -24,6 +25,7 @@ export default function ProjectCard({
   onSetCardMediaIndex
 }: ProjectCardProps) {
   const displayableTags = project.tags || project.technologies || [];
+  
   return (
     <motion.div
       key={project.title + index}

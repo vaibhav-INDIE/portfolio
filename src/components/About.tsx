@@ -1,11 +1,13 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 import { FaLaptopCode, FaBrain, FaGlobe, FaFlask, FaNetworkWired, FaTools, FaCalendarAlt, FaChevronLeft, FaChevronRight, FaDownload } from 'react-icons/fa'
 import { SiPython, SiMysql } from 'react-icons/si'
 import { IconType } from 'react-icons'
 import { FaShieldAlt } from 'react-icons/fa'
 import { useState, useEffect, useRef } from 'react'
+import { useRouter } from 'next/router';
 
 // Define types for skills data structure
 interface SkillItem {
@@ -237,6 +239,7 @@ function renderIcon(Icon: IconType, size: number, color: string) {
 }
 
 export default function About() {
+  const { basePath } = useRouter();
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isAutoScrolling, setIsAutoScrolling] = useState(true)
   const scrollInterval = useRef<NodeJS.Timeout | null>(null)
@@ -358,7 +361,7 @@ export default function About() {
                   {/* Background Image */}
                   {currentSkill.image && (
                     <div className="absolute inset-0 w-full h-full">
-                      <img src={currentSkill.image} alt={currentSkill.category} className="object-cover w-full h-full rounded-2xl grayscale hover:grayscale-0 transition-filter duration-300" />
+                      <Image src={basePath + currentSkill.image} alt={currentSkill.category} className="object-cover w-full h-full rounded-2xl grayscale hover:grayscale-0 transition-filter duration-300" fill sizes="100vw" priority />
                       {/* Overlay - increased opacity */}
                       <div className="absolute inset-0 bg-black/70 rounded-2xl" />
                     </div>
@@ -408,7 +411,7 @@ export default function About() {
                   </button>
                   <div className="flex items-center gap-4 mb-6">
                     {skills[modalSkillIndex].image && (
-                        <img src={skills[modalSkillIndex].image} alt={skills[modalSkillIndex].category} className="w-16 h-16 object-cover rounded-xl grayscale hover:grayscale-0 transition-filter duration-300" />
+                        <Image src={basePath + skills[modalSkillIndex].image} alt={skills[modalSkillIndex].category} width={64} height={64} className="w-16 h-16 object-cover rounded-xl grayscale hover:grayscale-0 transition-filter duration-300" />
                     )}
                       {skills[modalSkillIndex].icon && renderIcon(skills[modalSkillIndex].icon, 40, "white")}
                       <span className="text-2xl font-bold text-white font-display glow">{skills[modalSkillIndex].category}</span>
@@ -549,7 +552,7 @@ export default function About() {
                     <div className="flex flex-col items-center w-full">
                       <div className="flex items-center justify-center w-full cursor-pointer" onClick={() => setShowCertImageModal(true)}>
                         <img
-                          src={currentCert.image}
+                          src={basePath + currentCert.image}
                           alt={currentCert.name}
                             className="w-72 h-56 object-contain rounded-xl shadow-lg border border-white/10 bg-white/10 transition-transform duration-200 hover:scale-105 grayscale hover:grayscale-0"
                           style={{ maxWidth: '100%' }}
@@ -576,7 +579,7 @@ export default function About() {
                     <div>
                       <div className="flex items-center gap-4 mb-3">
                         {currentCert.titleIconImage ? (
-                            <img src={currentCert.titleIconImage} alt={currentCert.name} className="w-9 h-9 rounded-xl object-contain grayscale hover:grayscale-0" />
+                            <Image src={basePath + currentCert.titleIconImage} alt={currentCert.name} width={36} height={36} className="w-9 h-9 rounded-xl object-contain grayscale hover:grayscale-0" />
                         ) : (
                             <div className={`p-4 rounded-xl bg-gray-800 shadow-lg glow-border`}>
                             {currentCert.icon && renderIcon(currentCert.icon, 36, "white")}
@@ -638,10 +641,12 @@ export default function About() {
             >
               ×
             </button>
-            <img
-              src={currentCert.image}
+            <Image
+              src={basePath + currentCert.image}
               alt={currentCert.name}
-                className="rounded-2xl shadow-2xl max-h-[80vh] max-w-full border border-white/20 bg-white/10 grayscale hover:grayscale-0"
+              width={800}
+              height={600}
+              className="rounded-2xl shadow-2xl max-h-[80vh] max-w-full border border-white/20 bg-white/10 grayscale hover:grayscale-0"
               style={{ userSelect: 'none' }}
               onContextMenu={e => e.preventDefault()}
             />

@@ -3,6 +3,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
+import { useRouter } from 'next/router';
 import { X, Github, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react'
 import { Project, ProjectMedia } from '../types/ProjectTypes'
 
@@ -19,6 +20,7 @@ export default function ProjectModal({
   selectedMediaIndex,
   onSetSelectedMediaIndex
 }: ProjectModalProps) {
+  const { basePath } = useRouter();
   if (!project) return null;
 
   const currentMedia = project.media && project.media[selectedMediaIndex] as ProjectMedia | undefined;
@@ -120,7 +122,7 @@ export default function ProjectModal({
               project.image && (
                 <div className="relative w-full aspect-video bg-black">
                   <Image
-                    src={project.image}
+                    src={basePath + project.image}
                     alt={project.title}
                     layout="fill"
                     objectFit="contain"

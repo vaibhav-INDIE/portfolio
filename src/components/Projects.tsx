@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { Github, ExternalLink, X } from 'lucide-react'
 import Image from 'next/image'
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 interface MediaItem {
@@ -44,6 +45,7 @@ export default function Projects({
   selectedProject,
   onSetSelectedProject,
 }: ProjectsProps) {
+  const { basePath } = useRouter();
   const [selectedMediaIndex, setSelectedMediaIndex] = useState(0);
 
   const filteredProjects = currentCategory === 'All'
@@ -100,7 +102,7 @@ export default function Projects({
               >
                 <div className="relative w-full h-48 overflow-hidden">
                   <Image
-                    src={project.image || '/placeholder-image.png'}
+                    src={basePath + project.image}
                     alt={project.title}
                     layout="fill"
                     objectFit="cover"
@@ -184,7 +186,7 @@ export default function Projects({
                   <div className="relative w-full h-64 md:h-80 bg-[rgba(20,20,20,1)] mb-6">
                     {selectedProject.media[selectedMediaIndex]?.type === 'image' && (
                       <Image 
-                        src={selectedProject.media[selectedMediaIndex].url}
+                        src={basePath + selectedProject.media[selectedMediaIndex].url}
                         alt={selectedProject.media[selectedMediaIndex].caption || `Media ${selectedMediaIndex + 1} for ${selectedProject.title}`}
                         layout="fill"
                         objectFit="contain"
@@ -193,7 +195,7 @@ export default function Projects({
                     )}
                     {selectedProject.media[selectedMediaIndex]?.type === 'video' && (
                       <video
-                        src={selectedProject.media[selectedMediaIndex].url}
+                        src={basePath + selectedProject.media[selectedMediaIndex].url}
                         className="w-full h-full object-contain rounded-t-lg"
                         controls
                         autoPlay={false}
