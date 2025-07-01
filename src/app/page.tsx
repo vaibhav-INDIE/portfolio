@@ -3,7 +3,7 @@ import { useEffect, useState, useRef, useMemo } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { Github, Linkedin, Mail, FileText, X } from 'lucide-react'
 import { TypeAnimation } from 'react-type-animation'
-import { projects, certificates } from '../data/portfolio-data'
+import { projects, certificates, workExperiences } from '../data/portfolio-data'
 import { Project } from '../types/ProjectTypes'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
@@ -202,6 +202,67 @@ export default function Home() {
 
       {/* About/Skills Section */}
       <About />
+
+      {/* Work Experience Section */}
+      <section id="work" className="section py-24 bg-black">
+        <div className="container mx-auto px-6 max-w-6xl">
+          <h2 className="text-3xl md:text-4xl font-bold mb-12 text-white text-center">
+            Work Experience
+          </h2>
+          
+          <div className="space-y-8">
+            {workExperiences.map((work, index) => (
+              <motion.div 
+                key={work.title}
+                className="card bg-[rgba(28,28,28,1)] border border-[rgba(38,38,38,1)] hover:border-[rgba(255,255,255,0.2)] transition-all duration-300 overflow-hidden group"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                <div className="flex flex-col md:flex-row">
+                  <div className="relative w-full md:w-64 h-48 overflow-hidden">
+                    <Image
+                      src={`/portfolio${work.image}`}
+                      alt={work.company}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-all duration-300"></div>
+                  </div>
+                  
+                  <div className="p-6 md:p-8 flex-1">
+                    <div className="flex flex-col h-full">
+                      <div>
+                        <h3 className="text-xl font-semibold text-white mb-2">{work.title}</h3>
+                        <p className="text-primary mb-1">{work.company}</p>
+                        <p className="text-[rgba(255,255,255,0.5)] text-sm mb-6">{work.date}</p>
+                        
+                        <ul className="space-y-3 mb-6">
+                          {work.description.map((desc, idx) => (
+                            <li key={idx} className="text-[rgba(255,255,255,0.7)] text-sm flex items-start">
+                              <span className="text-primary mr-2 mt-1">•</span>
+                              <span>{desc}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      
+                      <div className="mt-auto pt-4 border-t border-[rgba(38,38,38,1)]">
+                        <h4 className="text-xs uppercase text-[rgba(255,255,255,0.5)] mb-2">Skills & Technologies</h4>
+                        <div className="flex flex-wrap gap-2">
+                          {work.skills.map((skill) => (
+                            <span key={skill} className="badge text-xs">{skill}</span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* Projects Section */}
       <Projects 

@@ -124,11 +124,12 @@ export default function About() {
             </div>
                 <ul className="space-y-2">
                   {skill.items.map((item) => (
-                    <li key={item.name} className="text-[rgba(255,255,255,0.7)] text-sm">
-                        {item.name}
-                      </li>
-                    ))}
-                  </ul>
+                    <li key={item.name} className="text-[rgba(255,255,255,0.7)] text-sm flex items-start">
+                      <span className="text-primary mr-2 mt-1.5">•</span>
+                      <span>{item.name}</span>
+                    </li>
+                  ))}
+                </ul>
                 </div>
               </div>
           ))}
