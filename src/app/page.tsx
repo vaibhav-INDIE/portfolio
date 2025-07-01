@@ -1,9 +1,9 @@
 'use client'
 import { useEffect, useState, useRef, useMemo } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { ArrowDown, Github, Linkedin, Mail, FileText } from 'lucide-react'
+import { Github, Linkedin, Mail, FileText, X } from 'lucide-react'
 import { TypeAnimation } from 'react-type-animation'
-import { projects, timeline, certificates } from '../data/portfolio-data'
+import { projects, certificates } from '../data/portfolio-data'
 import { Project } from '../types/ProjectTypes'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
@@ -19,13 +19,16 @@ const About = dynamic(() => import('../components/About'), {
   loading: () => <div className="min-h-screen bg-[rgba(16,16,16,1)]" />
 })
 
-// Memoize categories to prevent recalculation
-const categories = ['All', ...Array.from(new Set(projects.map(project => project.category)))]
+// Memoize categories
+const projectCategories = ['All', ...Array.from(new Set(projects.map(project => project.category)))]
+const certificateCategories = ['All', ...Array.from(new Set(certificates.map(cert => cert.category)))]
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [category, setCategory] = useState('All');
+  const [projectCategory, setProjectCategory] = useState('All');
+  const [certCategory, setCertCategory] = useState('All');
+  const [selectedCertificate, setSelectedCertificate] = useState<typeof certificates[0] | null>(null);
   const heroRef = useRef<HTMLDivElement>(null)
   
   const { scrollYProgress } = useScroll({
@@ -41,10 +44,14 @@ export default function Home() {
     setMounted(true);
   }, []);
 
-  // Memoize filtered projects
+  // Memoize filtered items
   const filteredProjects = useMemo(() => {
-    return category === 'All' ? projects : projects.filter(project => project.category === category);
-  }, [category]);
+    return projectCategory === 'All' ? projects : projects.filter(project => project.category === projectCategory);
+  }, [projectCategory]);
+
+  const filteredCertificates = useMemo(() => {
+    return certCategory === 'All' ? certificates : certificates.filter(cert => cert.category === certCategory);
+  }, [certCategory]);
 
   if (!mounted) {
     return null;
@@ -71,7 +78,7 @@ export default function Home() {
           >
             {/* Profile Photo Circle */}
             <motion.div 
-              className="relative w-32 h-32 md:w-40 md:h-40 mb-6 rounded-full overflow-hidden border-4 border-[rgba(var(--primary-rgb),0.5)] glow-border"
+              className="relative w-24 h-24 md:w-28 md:h-28 mb-6 rounded-full overflow-hidden border-4 border-[rgba(var(--primary-rgb),0.5)] glow-border"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
@@ -79,8 +86,8 @@ export default function Home() {
               <Image
                 src="/portfolio/profile.jpg"
                 alt="Vaibhav Jain"
-                width={160}
-                height={160}
+                width={112}
+                height={112}
                 priority
                 className="rounded-full border-4 object-cover w-full h-full"
               />
@@ -191,14 +198,6 @@ export default function Home() {
             </motion.div>
           </motion.div>
         </motion.div>
-
-        <motion.div
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-[rgba(255,255,255,0.7)]"
-          animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-        >
-          <ArrowDown className="w-5 h-5" />
-        </motion.div>
       </section>
 
       {/* About/Skills Section */}
@@ -207,48 +206,12 @@ export default function Home() {
       {/* Projects Section */}
       <Projects 
         projects={filteredProjects}
-        categories={categories}
-        currentCategory={category}
-        onSetCategory={setCategory}
+        categories={projectCategories}
+        currentCategory={projectCategory}
+        onSetCategory={setProjectCategory}
         selectedProject={selectedProject}
         onSetSelectedProject={setSelectedProject}
       />
-
-      {/* Timeline Section */}
-      <section id="timeline" className="section py-24 bg-[rgba(16,16,16,1)]">
-        <div className="container mx-auto px-6 max-w-6xl">
-          <h2 className="text-3xl md:text-4xl font-bold mb-12 text-white text-center">
-            My Journey
-          </h2>
-          <div className="space-y-8">
-            {timeline.map((item, index) => (
-              <div key={item.year} className="relative">
-                {index !== timeline.length - 1 && (
-                  <div className="absolute left-[15px] top-[30px] bottom-0 w-[2px] bg-[rgba(255,255,255,0.1)]" />
-                )}
-                <div className="flex gap-6">
-                  <div className="relative">
-                    <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
-                      <item.icon className="w-4 h-4 text-white" />
-                    </div>
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-xl font-semibold text-white mb-1">{item.title}</h3>
-                    <p className="text-primary mb-3">{item.year}</p>
-                    <ul className="space-y-2">
-                      {item.items.map((achievement, idx) => (
-                        <li key={idx} className="text-[rgba(255,255,255,0.7)]">
-                          {achievement}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Certificates Section */}
       <section id="certificates" className="section py-24 bg-black">
@@ -256,11 +219,25 @@ export default function Home() {
           <h2 className="text-3xl md:text-4xl font-bold mb-12 text-white text-center">
             Certificates & Achievements
           </h2>
+
+          <div className="flex flex-wrap justify-center gap-3 mb-10">
+            {certificateCategories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setCertCategory(cat)}
+                className={`btn text-sm ${certCategory === cat ? 'btn-primary' : 'btn-outline'}`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {certificates.map((cert) => (
+            {filteredCertificates.map((cert) => (
               <div 
                 key={cert.name}
-                className="card bg-[rgba(28,28,28,1)] border border-[rgba(38,38,38,1)] hover:border-[rgba(255,255,255,0.2)] transition-all duration-300"
+                className="card bg-[rgba(28,28,28,1)] border border-[rgba(38,38,38,1)] hover:border-[rgba(255,255,255,0.2)] transition-all duration-300 cursor-pointer"
+                onClick={() => setSelectedCertificate(cert)}
               >
                 <div className="relative w-full h-48 overflow-hidden">
                   <Image
@@ -290,6 +267,59 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Certificate Modal */}
+      {selectedCertificate && (
+        <div 
+          className="modal-overlay"
+          onClick={() => setSelectedCertificate(null)}
+        >
+          <div 
+            className="modal-content max-w-4xl w-[90%] bg-[rgba(24,24,24,1)] border border-[rgba(48,48,48,1)] rounded-xl shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button 
+              onClick={() => setSelectedCertificate(null)}
+              className="absolute top-4 right-4 z-10 p-2 rounded-full bg-[rgba(38,38,38,0.8)] text-white/70 hover:text-white transition-colors"
+              aria-label="Close modal"
+            >
+              <X size={20} />
+            </button>
+            
+            <div className="max-h-[85vh] overflow-y-auto custom-scrollbar">
+              <div className="relative w-full h-[60vh] bg-[rgba(20,20,20,1)]">
+                <Image 
+                  src={`/portfolio${selectedCertificate.image}`}
+                  alt={selectedCertificate.name}
+                  fill
+                  className="object-contain"
+                  style={{ userSelect: 'none' }}
+                  onContextMenu={(e) => e.preventDefault()}
+                />
+              </div>
+              
+              <div className="p-6 md:p-8">
+                <h3 className="text-2xl md:text-3xl font-bold mb-4 text-white">{selectedCertificate.name}</h3>
+                <p className="text-primary mb-2">{selectedCertificate.issuer}</p>
+                <p className="text-[rgba(255,255,255,0.5)] text-sm mb-6">{selectedCertificate.date}</p>
+                
+                <p className="text-[rgba(255,255,255,0.8)] mb-6">
+                  {selectedCertificate.description}
+                </p>
+
+                <div className="mb-6">
+                  <h4 className="text-sm uppercase tracking-wider text-[rgba(255,255,255,0.5)] mb-2">Skills & Topics</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedCertificate.skills.map((skill) => (
+                      <span key={skill} className="badge">{skill}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   )
 }

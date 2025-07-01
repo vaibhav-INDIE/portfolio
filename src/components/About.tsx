@@ -105,7 +105,7 @@ const skills: SkillCategory[] = [
 
 export default function About() {
   return (
-    <section id="skills" className="section py-24 bg-[rgba(16,16,16,1)]">
+    <section id="about" className="section py-24 bg-[rgba(16,16,16,1)]">
       <div className="container mx-auto px-6 max-w-6xl">
         <h2 className="text-3xl md:text-4xl font-bold mb-12 text-white text-center">
           Skills & Expertise
