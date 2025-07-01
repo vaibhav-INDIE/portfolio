@@ -118,28 +118,23 @@ export default function Home() {
             className="flex flex-col items-center text-center md:text-left max-w-3xl mx-auto"
           >
             {/* Profile Photo Circle */}
-              <motion.div 
+            <motion.div 
               className="relative w-32 h-32 md:w-40 md:h-40 mb-6 rounded-full overflow-hidden border-4 border-[rgba(var(--primary-rgb),0.5)] glow-border"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
             >
-              (
-                <div className="w-full h-full flex items-center justify-center bg-[#222] text-[#9d7fea] text-4xl font-bold">
-                  VJ
-                </div>
-              ) : (
-                <img 
-                  src="/portfolio/profile.jpg" 
-                  alt="Vaibhav Jain" 
-                  width={160} 
-                  height={160} 
-                  className="rounded-full border-4 object-cover"
-                />
-              )
+              <img 
+                src="/portfolio/profile.jpg" 
+                alt="Vaibhav Jain" 
+                width={160} 
+                height={160} 
+                className="rounded-full border-4 object-cover w-full h-full"
+              />
 
               <div className="absolute inset-0 bg-gradient-to-tr from-[rgba(var(--primary-rgb),0.1)] to-transparent"></div>
             </motion.div>
+
             
             <motion.h1 
               className="text-4xl md:text-6xl xl:text-7xl font-bold tracking-tight mb-4"
