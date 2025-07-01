@@ -1,6 +1,6 @@
 import type { Config } from "tailwindcss";
 
-export default {
+const config: Config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -9,6 +9,7 @@ export default {
   theme: {
     extend: {
       colors: {
+        primary: 'rgba(var(--primary-rgb), <alpha-value>)',
         black: "#000000",
         white: "#ffffff",
         gray: {
@@ -23,10 +24,30 @@ export default {
           900: "#171717",
         },
       },
+      animation: {
+        "flow-x": "flowX 3s ease-in-out infinite",
+        "aurora": "aurora 60s linear infinite",
+      },
+      keyframes: {
+        flowX: {
+          "0%": { backgroundPosition: "200% center" },
+          "100%": { backgroundPosition: "0% center" },
+        },
+        aurora: {
+          from: {
+            backgroundPosition: '50% 50%, 50% 50%',
+          },
+          to: {
+            backgroundPosition: '350% 50%, 350% 50%',
+          },
+        },
+      },
     },
   },
   plugins: [],
   safelist: [
-    'border-minimal',
+    "border-minimal",
   ],
-} satisfies Config;
+};
+
+export default config;

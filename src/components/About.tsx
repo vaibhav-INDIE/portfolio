@@ -106,35 +106,48 @@ const skills: SkillCategory[] = [
 export default function About() {
   return (
     <section id="about" className="section py-24 bg-[rgba(16,16,16,1)]">
-      <div className="container mx-auto px-6 max-w-6xl">
-        <h2 className="text-3xl md:text-4xl font-bold mb-12 text-white text-center">
-          Skills & Expertise
+    <div className="container mx-auto px-6 max-w-6xl">
+      
+      {/* START: Updated Heading with Flow Animation */}
+      <div className="flex flex-col items-center mb-16">
+        <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          <span className="animate-flow-x bg-gradient-to-r from-white via-[rgba(var(--primary-rgb),0.8)] to-white bg-[length:200%_auto] bg-clip-text text-transparent">
+            Skills & Expertise
+          </span>
         </h2>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {skills.map((skill) => (
-            <div 
-              key={skill.category}
-              className="card bg-[rgba(28,28,28,1)] border border-[rgba(38,38,38,1)] hover:border-[rgba(255,255,255,0.2)] transition-all duration-300"
-            >
-              <div className="p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  {skill.icon && <skill.icon className="text-2xl text-primary" />}
-                  <h3 className="text-lg font-semibold text-white">{skill.category}</h3>
-            </div>
-                <ul className="space-y-2">
-                  {skill.items.map((item) => (
-                    <li key={item.name} className="text-[rgba(255,255,255,0.7)] text-sm flex items-start">
-                      <span className="text-primary mr-2 mt-1.5">•</span>
-                      <span>{item.name}</span>
-                    </li>
-                  ))}
-                </ul>
-                </div>
-              </div>
-          ))}
-        </div>
+        <div className="h-1 w-32 bg-gradient-to-r from-transparent via-[rgba(var(--primary-rgb),0.7)] to-transparent"></div>
       </div>
-    </section>
+      {/* END: Updated Heading */}
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {skills.map((skill) => (
+          <div 
+            key={skill.category}
+            className="card bg-[rgba(28,28,28,1)] border border-[rgba(38,38,38,1)] hover:border-[rgba(255,255,255,0.2)] transition-all duration-300"
+          >
+            <div className="p-6">
+              <div className="flex items-center gap-3 mb-4">
+                {skill.icon && <skill.icon className="text-2xl text-primary" />}
+                <h3 className="text-lg font-semibold text-white">{skill.category}</h3>
+              </div>
+              <ul className="space-y-2">
+                {skill.items.map((item) => (
+                  // START: Fixed Dot Alignment
+                  <li 
+                    key={item.name} 
+                    className="text-[rgba(255,255,255,0.7)] text-sm flex items-baseline" // Changed to items-baseline
+                  >
+                    <span className="text-primary mr-2">•</span> {/* Removed mt-1.5 */}
+                    <span>{item.name}</span>
+                  </li>
+                  // END: Fixed Dot Alignment
+                ))}
+              </ul>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
   );
 } 

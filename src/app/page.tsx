@@ -5,6 +5,7 @@ import { Github, Linkedin, Mail, FileText, X } from 'lucide-react'
 import { TypeAnimation } from 'react-type-animation'
 import { projects, certificates, workExperiences } from '../data/portfolio-data'
 import { Project } from '../types/ProjectTypes'
+import Footer from '@/components/footer';
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 
@@ -186,7 +187,7 @@ export default function Home() {
                 <span className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 blur-sm transition-opacity duration-300"></span>
               </a>
               <a
-                href="/portfolio/2228077_RAG_resume.pdf"
+                href="/portfolio/IBM_resume.pdf"
                 className="btn btn-outline flex items-center gap-2 relative overflow-hidden group"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -206,9 +207,19 @@ export default function Home() {
       {/* Work Experience Section */}
       <section id="work" className="section py-24 bg-black">
         <div className="container mx-auto px-6 max-w-6xl">
-          <h2 className="text-3xl md:text-4xl font-bold mb-12 text-white text-center">
-            Work Experience
-          </h2>
+          <motion.div 
+            className="flex flex-col items-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="bg-gradient-to-r from-white via-[rgba(var(--primary-rgb),0.8)] to-white 
+               bg-[length:200%_auto] bg-clip-text text-transparent animate-flow-x">
+              <span>Work Experience</span>
+            </h2>
+            <div className="h-1 w-32 bg-gradient-to-r from-transparent via-[rgba(var(--primary-rgb),0.7)] to-transparent"></div>
+          </motion.div>
           
           <div className="space-y-8">
             {workExperiences.map((work, index) => (
@@ -220,8 +231,8 @@ export default function Home() {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
                 <div className="flex flex-col md:flex-row">
-                  <div className="relative w-full md:w-64 h-48 overflow-hidden bg-[rgba(20,20,20,1)]">
-                    <div className="absolute inset-0 flex items-center justify-center p-4">
+                  <div className="relative w-full md:w-64 h-48 md:h-auto bg-[rgba(20,20,20,1)] flex items-center justify-center p-6">
+                    <div className="relative w-full h-full">
                       <Image
                         src={`/portfolio${work.image}`}
                         alt={work.company}
@@ -242,8 +253,9 @@ export default function Home() {
                         
                         <ul className="space-y-3 mb-6">
                           {work.description.map((desc, idx) => (
-                            <li key={idx} className="text-[rgba(255,255,255,0.7)] text-sm flex items-start">
-                              <span className="text-primary mr-2 mt-1">•</span>
+                            <li key={idx} className="text-[rgba(255,255,255,0.7)] text-sm flex items-baseline">
+                              {/* Change mr-2 to mr-1.5 here */}
+                              <span className="text-primary mr-1.5 text-base leading-[1]">•</span>
                               <span>{desc}</span>
                             </li>
                           ))}
@@ -280,9 +292,14 @@ export default function Home() {
       {/* Certificates Section */}
       <section id="certificates" className="section py-24 bg-black">
         <div className="container mx-auto px-6 max-w-6xl">
-          <h2 className="text-3xl md:text-4xl font-bold mb-12 text-white text-center">
-            Certificates & Achievements
-          </h2>
+          <div className="flex flex-col items-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+              <span className="animate-flow-x bg-gradient-to-r from-white via-primary to-white bg-[length:200%_auto] bg-clip-text text-transparent">
+                Certificates & Achievements
+              </span>
+            </h2>
+            <div className="h-1 w-32 bg-gradient-to-r from-transparent via-[rgba(var(--primary-rgb),0.7)] to-transparent"></div>
+          </div>
 
           <div className="flex flex-wrap justify-center gap-3 mb-10">
             {certificateCategories.map((cat) => (
@@ -384,6 +401,9 @@ export default function Home() {
           </div>
         </div>
       )}
+
+      {/* Footer Modal */}
+      <Footer />
     </main>
   )
 }

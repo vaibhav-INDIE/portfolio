@@ -233,9 +233,14 @@ export default function Projects({
   return (
     <section id="projects" className="section py-24 bg-black">
       <div className="container mx-auto px-6 max-w-6xl">
-        <h2 className="text-3xl md:text-4xl font-bold mb-12 text-white text-center">
-          My Projects
-        </h2>
+        <div className="flex flex-col items-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            <span className="animate-flow-x bg-gradient-to-r from-white via-primary to-white bg-[length:200%_auto] bg-clip-text text-transparent">
+              My Projects
+            </span>
+          </h2>
+          <div className="h-1 w-32 bg-gradient-to-r from-transparent via-[rgba(var(--primary-rgb),0.7)] to-transparent"></div>
+        </div>
 
         <div className="flex flex-wrap justify-center gap-3 mb-10">
           {categories.map((cat) => (
