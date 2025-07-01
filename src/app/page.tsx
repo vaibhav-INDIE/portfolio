@@ -1,5 +1,4 @@
 'use client'
-
 import { useEffect, useState, useRef } from 'react'
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import { ArrowDown, Github, Linkedin, Mail, FileText, ChevronRight, ExternalLink, X } from 'lucide-react'
@@ -10,6 +9,8 @@ import Image from 'next/image'
 // Import data and types from data file
 import { skills, timeline, certificates, type Certificate, workExperiences } from '../data/portfolio-data'
 import { type Project } from '../components/Projects'; // Added import for Project interface
+
+
 
 // Project data
 const projects: Project[] = [
@@ -71,6 +72,7 @@ const projects: Project[] = [
 const categories = ['All', ...Array.from(new Set(projects.map(project => project.category)))]
 
 export default function Home() {
+  const basePath = '/portfolio';
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -87,7 +89,7 @@ export default function Home() {
     target: heroRef,
     offset: ['start start', 'end start']
   })
-  
+  const [imgError, setImgError] = useState(false)
   const opacity = useTransform(scrollYProgress, [0, 1], [1, 0])
   const scale = useTransform(scrollYProgress, [0, 1], [1, 0.8])
 
@@ -117,25 +119,28 @@ export default function Home() {
             className="flex flex-col items-center text-center md:text-left max-w-3xl mx-auto"
           >
             {/* Profile Photo Circle */}
-            <motion.div 
+              <motion.div 
               className="relative w-32 h-32 md:w-40 md:h-40 mb-6 rounded-full overflow-hidden border-4 border-[rgba(var(--primary-rgb),0.5)] glow-border"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
             >
-              <Image 
-                src="/profile.jpg" 
-                alt="Vaibhav Jain" 
-                fill
-                sizes="(max-width: 768px) 128px, 160px"
-                priority
-                className="object-cover"
-                onError={(e) => {
-                  // Fallback if image doesn't exist
-                  const target = e.target as HTMLImageElement;
-                  target.src = 'data:image/svg+xml;charset=UTF-8,%3Csvg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160"%3E%3Crect width="160" height="160" fill="%23222"%3E%3C/rect%3E%3Ctext x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="40" fill="%239d7fea"%3EVJ%3C/text%3E%3C/svg%3E';
-                }}
-              />
+              {imgError ? (
+                <div className="w-full h-full flex items-center justify-center bg-[#222] text-[#9d7fea] text-4xl font-bold">
+                  VJ
+                </div>
+              ) : (
+                <Image
+                  src={`${basePath}/profile.jpg`}
+                  alt="Vaibhav Jain"
+                  fill
+                  sizes="(max-width: 768px) 128px, 160px"
+                  priority
+                  className="object-cover"
+                  onError={() => setImgError(true)}
+                />
+              )}
+
               <div className="absolute inset-0 bg-gradient-to-tr from-[rgba(var(--primary-rgb),0.1)] to-transparent"></div>
             </motion.div>
             

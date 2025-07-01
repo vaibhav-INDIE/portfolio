@@ -1,5 +1,5 @@
 {
-  "homepage": "https://vaibhav-INDIE.github.io/CuttuOP",
+  "homepage": "https://vaibhav-indie.github.io/portfolio",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
