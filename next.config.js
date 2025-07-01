@@ -7,7 +7,7 @@ const nextConfig = {
     unoptimized: true,
   },
   trailingSlash: true,
-  skipTrailingSlashRedirect: true,
+  reactStrictMode: true,
 };
 
 module.exports = nextConfig;
