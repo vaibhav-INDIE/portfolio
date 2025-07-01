@@ -85,7 +85,7 @@ export default function Home() {
               transition={{ duration: 0.5 }}
             >
               <Image
-                src="/portfolio/profile.jpg"
+                src="/profile.jpg"
                 alt="Vaibhav Jain"
                 width={112}
                 height={112}
@@ -187,7 +187,7 @@ export default function Home() {
                 <span className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 blur-sm transition-opacity duration-300"></span>
               </a>
               <a
-                href="/portfolio/IBM_resume.pdf"
+                href="/IBM_resume.pdf"
                 className="btn btn-outline flex items-center gap-2 relative overflow-hidden group"
                 target="_blank"
                 rel="noopener noreferrer"

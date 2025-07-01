@@ -38,7 +38,7 @@ export default function ProjectCard({
         {project.media && project.media.length > 0 ? (
           <div className="w-full h-full relative">
             <Image
-              src={`/portfolio${project.media[cardMediaIndex]?.url}` || '/portfolio/placeholder-image.png'}
+              src={`${project.media[cardMediaIndex]?.url}` || '/placeholder-image.png'}
               alt={project.media[cardMediaIndex]?.caption || project.title}
               layout="fill"
               objectFit="cover"
@@ -86,7 +86,7 @@ export default function ProjectCard({
         ) : (
           <div className="w-full h-full relative">
             <Image
-              src={`/portfolio${project.image}` || '/portfolio/placeholder-image.png'}
+              src={`${project.image}` || '/placeholder-image.png'}
               alt={project.title}
               layout="fill"
               objectFit="cover"

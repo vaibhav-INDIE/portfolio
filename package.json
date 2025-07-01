@@ -1,5 +1,5 @@
 {
-  "homepage": "https://vaibhav-indie.github.io/portfolio",
+  "homepage": "https://www.cuttu.in",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
