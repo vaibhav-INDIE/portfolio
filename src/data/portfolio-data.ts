@@ -357,7 +357,7 @@ export const workExperiences: WorkExperience[] = [
       'Worked on hands-on projects involving object detection, classification, and model inference optimization.',
       'Enhanced understanding of AI hardware acceleration and efficient deployment strategies.'
     ],
-    image: '/logos/intel-logo-2022.png',
+    image: '/logos/Intel.png',
     skills: ['OpenVINO', 'Deep Learning', 'Computer Vision', 'Model Optimization', 'Edge AI'],
   }
 ];
