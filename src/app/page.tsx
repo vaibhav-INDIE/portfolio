@@ -216,7 +216,7 @@ export default function Home() {
           >
             <h2 className="bg-gradient-to-r from-white via-[rgba(var(--primary-rgb),0.8)] to-white 
                bg-[length:200%_auto] bg-clip-text text-transparent animate-flow-x">
-              <span>Work Experience</span>
+              <span>Work Experience and Industry Trainings</span>
             </h2>
             <div className="h-1 w-32 bg-gradient-to-r from-transparent via-[rgba(var(--primary-rgb),0.7)] to-transparent"></div>
           </motion.div>

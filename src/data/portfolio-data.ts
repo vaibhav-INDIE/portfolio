@@ -335,6 +335,31 @@ export const workExperiences: WorkExperience[] = [
     image: '/logos/finvestfx-cover.jpg',
     skills: ['RAG', 'FAISS', 'Gemini', 'Text Embeddings', 'Hugging Face', 'AI', 'Excel Automation'],
   },
+  {
+    title: 'Full-Stack Development Training (Ongoing)',
+    company: 'KIIT University - Batch B2',
+    date: '2025',
+    description: [
+      'Currently pursuing intensive full-stack training covering Java Spring Boot, React.js, and Angular.',
+      'Gaining hands-on experience in building RESTful APIs, state-managed frontends, and full-stack applications.',
+      'Collaborating in team projects simulating real-world software development workflows.'
+    ],
+    image: '/logos/kiit.png',
+    skills: ['Java', 'Spring Boot', 'React', 'Angular', 'Full-Stack Development', 'REST APIs'],
+  },
+  {
+    title: 'AI Training Program Trainee',
+    company: 'Intel',
+    date: 'May 2024',
+    description: [
+      'Completed a specialized AI training program focused on deep learning, computer vision, and model optimization.',
+      'Built and deployed models using Intel OpenVINO toolkit for edge AI applications.',
+      'Worked on hands-on projects involving object detection, classification, and model inference optimization.',
+      'Enhanced understanding of AI hardware acceleration and efficient deployment strategies.'
+    ],
+    image: '/logos/intel-logo-2022.png',
+    skills: ['OpenVINO', 'Deep Learning', 'Computer Vision', 'Model Optimization', 'Edge AI'],
+  }
 ];
 
 // Project data
@@ -353,6 +378,8 @@ export const projects: Project[] = [
     team: 'Me + 1',
     achievements: ['Selected for KIIT Ideation 1.0 Round 2', 'End to End Health Care App'],
     media: [
+      { type: 'video', url: '/projects/airassoi/1.mp4', caption: 'Calorie Tracking' },
+      { type: 'video', url: '/projects/airassoi/2.mp4', caption: 'Diet Plan' },
       { type: 'image', url: '/projects/airassoi/diet_plan given.png', caption: 'Given Diet plan from User Profile' },
       { type: 'image', url: '/projects/airassoi/profile_taken.png', caption: 'Profile Analysis' },
       { type: 'image', url: '/projects/airassoi/youtube_banner.png', caption: 'App Walkthrough' }
@@ -391,5 +418,40 @@ export const projects: Project[] = [
     media: [
       { type: 'image', url: '/projects/GN/GN_final.png', caption: 'Algorithm Visualization' }
     ]
-  }
+  },
+  {
+    title: 'Diabetes Prediction System',
+    description: 'A machine learning system using ensemble models for predicting diabetes risk based on medical records.',
+    longDescription: `Developed multiple models including L1-Regularized Regression, Decision Trees, and Voting Ensembles to predict diabetes likelihood.\n\nKey Features:\n• Cleaned invalid insulin/glucose records with K-Means clustering\n• Feature engineering and binning for better model generalization\n• Achieved high F1-score and ROC-AUC across models`,
+    tags: ['Python', 'Scikit-learn', 'Pandas', 'Matplotlib'],
+    technologies: ['Data Science', 'Machine Learning', 'EDA'],
+    image: '/projects/sugar/out.jpg',
+    github: 'https://github.com/vaibhav-INDIE/Diabetes-Prediction-EDA',
+    demo: '',
+    category: 'Data Science',
+    date: '2024',
+    team: 'Solo Project',
+    achievements: ['EDA-driven feature cleaning', 'Capstone Project'],
+    media: [
+      { type: 'image', url: '/projects/sugar/out.jpg', caption: 'Model Performance Metrics' }
+    ]
+  },
+  {
+  title: 'Developer Portfolio Website',
+  description: 'A dynamic personal portfolio showcasing my projects, experience, skills and animated components.',
+  longDescription: `Built a fully responsive portfolio website to highlight my work, achievements, and certifications.\n\nKey Features:\n• Project cards with media gallery\n• Custom 404 page and smooth animations using Framer Motion\n• Integrated GitHub, LinkedIn, Mail links\n• Deployed via GitHub Pages with custom domain\n• Dark mode and responsive design for all devices`,
+  tags: ['Next.js','React' ,'TailwindCSS', 'Framer Motion', 'GitHub Pages'],
+  technologies: ['Full Stack', 'Frontend', 'Portfolio', 'Deployment'],
+  image: '/projects/website/out.jpg',
+  github: 'https://github.com/vaibhav-INDIE/portfolio',
+  demo: 'https://vaibhav-indie.github.io/portfolio/',
+  category: 'Full Stack',
+  date: '2025',
+  team: 'Solo Project',
+  achievements: ['Custom Domain Setup', '3D-style UX with Framer Motion'],
+  media: [
+      { type: 'video', url: '/projects/website/example.mp4', caption: 'Model Performance Metrics' }
+      
+    ]
+}
 ];
