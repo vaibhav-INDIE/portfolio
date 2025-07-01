@@ -88,7 +88,7 @@ export default function Home() {
     target: heroRef,
     offset: ['start start', 'end start']
   })
-  const [imgError, setImgError] = useState(false)
+  //const [imgError, setImgError] = useState(false)
   const opacity = useTransform(scrollYProgress, [0, 1], [1, 0])
   const scale = useTransform(scrollYProgress, [0, 1], [1, 0.8])
 
@@ -124,21 +124,19 @@ export default function Home() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
             >
-              {imgError ? (
+              (
                 <div className="w-full h-full flex items-center justify-center bg-[#222] text-[#9d7fea] text-4xl font-bold">
                   VJ
                 </div>
               ) : (
-                <Image
-                  src="/portfolio/profile.jpg"
-                  alt="Vaibhav Jain"
-                  fill
-                  sizes="(max-width: 768px) 128px, 160px"
-                  priority
-                  className="object-cover"
-                  onError={() => setImgError(true)}
+                <img 
+                  src="/portfolio/profile.jpg" 
+                  alt="Vaibhav Jain" 
+                  width={160} 
+                  height={160} 
+                  className="rounded-full border-4 object-cover"
                 />
-              )}
+              )
 
               <div className="absolute inset-0 bg-gradient-to-tr from-[rgba(var(--primary-rgb),0.1)] to-transparent"></div>
             </motion.div>
