@@ -72,7 +72,6 @@ const projects: Project[] = [
 const categories = ['All', ...Array.from(new Set(projects.map(project => project.category)))]
 
 export default function Home() {
-  const basePath = '/portfolio';
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -131,7 +130,7 @@ export default function Home() {
                 </div>
               ) : (
                 <Image
-                  src={`${basePath}/profile.jpg`}
+                  src="/portfolio/profile.jpg"
                   alt="Vaibhav Jain"
                   fill
                   sizes="(max-width: 768px) 128px, 160px"
