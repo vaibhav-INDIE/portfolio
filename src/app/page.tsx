@@ -17,6 +17,7 @@ export default function Home() {
   useEffect(() => {
     setMounted(true);
   }, []);
+
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [category, setCategory] = useState('All');
   const heroRef = useRef<HTMLDivElement>(null)
@@ -28,7 +29,9 @@ export default function Home() {
   const opacity = useTransform(scrollYProgress, [0, 1], [1, 0])
   const scale = useTransform(scrollYProgress, [0, 1], [1, 0.8])
 
-  if (!mounted) return null
+  if (!mounted) {
+    return null; // Return null on server-side
+  }
 
   return (
     <main className="min-h-screen">
