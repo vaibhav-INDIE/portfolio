@@ -1,7 +1,5 @@
 'use client'
 
-import { motion } from 'framer-motion'
-
 interface CategoryFiltersProps {
   categories: string[];
   currentCategory: string;
@@ -16,15 +14,17 @@ export default function CategoryFilters({
   return (
     <div className="flex flex-wrap justify-center gap-3 mb-10">
       {categories.map((cat) => (
-        <motion.button
+        <button
           key={cat}
           onClick={() => onSetCategory(cat)}
-          className={`btn text-sm ${currentCategory === cat ? 'btn-primary' : 'btn-outline'}`}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          className={`btn text-sm transform hover:scale-105 transition-all duration-300 ${
+            currentCategory === cat 
+              ? 'btn-primary hover:brightness-110' 
+              : 'btn-outline hover:border-primary/50'
+          }`}
         >
           {cat}
-        </motion.button>
+        </button>
       ))}
     </div>
   );

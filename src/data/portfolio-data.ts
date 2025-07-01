@@ -1,6 +1,7 @@
 import { IconType } from 'react-icons'
 import { FaLaptopCode, FaBrain, FaGlobe, FaFlask, FaNetworkWired, FaTools, FaCalendarAlt } from 'react-icons/fa'
 import { SiPython, SiMysql } from 'react-icons/si'
+import { Project } from '../types/ProjectTypes'
 
 // Define types for skills data structure
 interface SkillItem {
@@ -334,4 +335,61 @@ export const workExperiences: WorkExperience[] = [
     image: '/logos/finvestfx-cover.jpg',
     skills: ['RAG', 'FAISS', 'Gemini', 'Text Embeddings', 'Hugging Face', 'AI', 'Excel Automation'],
   },
+];
+
+// Project data
+export const projects: Project[] = [
+  {
+    title: 'AI.Rassoi App',
+    description: 'An AI-powered health buddy with Diet recommendations, Calorie tracking, Life Style Analysis, and recipe suggestions.',
+    longDescription: `An AI-powered health buddy with Diet recommendations, Calorie tracking, Life Style Analysis, and recipe suggestions. \n\nKey Features:\n• Personalized recipe recommendations using Gemini API\n• Calories and Macronutrient recognition from images\n• Dietary restriction handling\n• Step by Step Cooking Instructions with ChatBot\n• Custom Recipe Generator from Raw Ingredients`,
+    tags: ['Gemini API', 'Dart', 'Flutter', 'SQL'],
+    technologies: ['AI', 'Full Stack','Prompt Engineering','Mobile App','Diet Recommendation'],
+    image: '/projects/airassoi/playstore_banner.png',
+    github: 'https://github.com/vaibhav-INDIE/Ai.Rassoi',
+    demo: 'https://www.airassoi.com',
+    category: 'AI',
+    date: '2024',
+    team: 'Me + 1',
+    achievements: ['Selected for KIIT Ideation 1.0 Round 2', 'End to End Health Care App'],
+    media: [
+      { type: 'image', url: '/projects/airassoi/diet_plan given.png', caption: 'Given Diet plan from User Profile' },
+      { type: 'image', url: '/projects/airassoi/profile_taken.png', caption: 'Profile Analysis' },
+      { type: 'image', url: '/projects/airassoi/youtube_banner.png', caption: 'App Walkthrough' }
+    ]
+  },
+  {
+    title: 'Hate Speech Recognition',
+    description: 'Machine learning model for hate speech detection using patient data, achieving 96% accuracy on the Kaggle dataset.',
+    longDescription: `A ANN model for hate speech detection using patient data, achieving 96% accuracy on the Kaggle dataset.\n\nKey Features:\n• 96% prediction accuracy\n• Feature importance analysis\n• Risk factor visualization\n• Comprehensive documentation`,
+    tags: ['Python', 'TensorFlow', 'Keras', 'NumPy', 'Pandas', 'Matplotlib'],
+    technologies: ['AI', 'Machine Learning', 'Deep Learning','NLP'],
+    image: '/projects/hate_speech/intersection.png',
+    github: 'https://github.com/vaibhav-INDIE/Hate-Speech-by-ANN',
+    demo: 'https://github.com/vaibhav-INDIE/Hate-Speech-by-ANN',
+    category: 'Data Science',
+    date: '2024',
+    team: 'Solo Project',
+    achievements: ['96% accuracy on test set', 'Research Paper'],
+    media: [
+      { type: 'image', url: '/projects/hate_speech/intersection.png', caption: 'Model Performance Metrics' }
+    ]
+  },
+  {
+    title: 'Genetic Algorithm for Math Reasoning',
+    description: 'Implementation of genetic algorithms to solve complex mathematical reasoning problems and optimize solutions.',
+    longDescription: `An innovative approach to solving complex mathematical problems using genetic algorithms combined with LLM-based reasoning. The system evolves solutions through generations while maintaining mathematical validity.\n\nKey Features:\n• LLM-powered fitness evaluation\n• Multi-objective optimization\n• Solution diversity preservation\n• Real-time visualization\n• Export capabilities`,
+    tags: ['Python', 'NumPy', 'Matplotlib', 'Locally Hosted LLM', 'vLLM'],
+    technologies: ['AI', 'Algorithms'],
+    image: '/projects/GN/GN_final.png',
+    github: '',
+    demo: '',
+    category: 'AI',
+    date: '2025',
+    team: 'Research Project',
+    achievements: ['Novel approach to mathematical reasoning', 'Published research paper'],
+    media: [
+      { type: 'image', url: '/projects/GN/GN_final.png', caption: 'Algorithm Visualization' }
+    ]
+  }
 ];
