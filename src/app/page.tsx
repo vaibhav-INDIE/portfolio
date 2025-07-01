@@ -1,14 +1,11 @@
 'use client'
 import { useEffect, useState, useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { ArrowDown, Github, Linkedin, Mail, FileText, ChevronRight, ExternalLink, X } from 'lucide-react'
+import { ArrowDown, Github, Linkedin, Mail, FileText } from 'lucide-react'
 import React from 'react'
 import { TypeAnimation } from 'react-type-animation'
-import Image from 'next/image'
-
-// Import data and types from data file
-import { skills, certificates, type Certificate, workExperiences, projects } from '../data/portfolio-data'
-import { type Project } from '../components/Projects'
+import { projects } from '../data/portfolio-data'
+import { Project } from '../types/ProjectTypes'
 import Projects from '../components/Projects'
 
 // Get unique categories for project filtering
@@ -20,12 +17,9 @@ export default function Home() {
   useEffect(() => {
     setMounted(true);
   }, []);
-  const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [category, setCategory] = useState('All');
   const heroRef = useRef<HTMLDivElement>(null)
-  const [activeCertificate, setActiveCertificate] = useState<Certificate | null>(null);
-  const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
-  const [popupImageUrl, setPopupImageUrl] = useState<string | null>(null);
   
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -33,10 +27,6 @@ export default function Home() {
   })
   const opacity = useTransform(scrollYProgress, [0, 1], [1, 0])
   const scale = useTransform(scrollYProgress, [0, 1], [1, 0.8])
-
-  // Move these inside the component:
-  const certificateCategories = ['All', ...Array.from(new Set(certificates.map(cert => cert.category)))]
-  const [certificateCategory, setCertificateCategory] = useState('All');
 
   if (!mounted) return null
 
@@ -66,18 +56,16 @@ export default function Home() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
             >
-              <img 
+              <motion.img 
                 src="/profile.jpg" 
                 alt="Vaibhav Jain" 
                 width={160} 
                 height={160} 
                 className="rounded-full border-4 object-cover w-full h-full"
               />
-
               <div className="absolute inset-0 bg-gradient-to-tr from-[rgba(var(--primary-rgb),0.1)] to-transparent"></div>
             </motion.div>
 
-            
             <motion.h1 
               className="text-4xl md:text-6xl xl:text-7xl font-bold mb-4"
               initial={{ opacity: 0, y: 20 }}
@@ -201,95 +189,6 @@ export default function Home() {
         selectedProject={selectedProject}
         onSetSelectedProject={setSelectedProject}
       />
-
-      {/* Certificates Section */}
-      <section id="certificates" className="section py-24 bg-[rgba(16,16,16,1)]">
-        <div className="container mx-auto px-6 max-w-6xl">
-          <h2 className="text-3xl md:text-4xl font-bold mb-12 text-white text-center">
-            Certifications
-          </h2>
-
-          <div className="flex flex-wrap justify-center gap-3 mb-10">
-            {certificateCategories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setCertificateCategory(cat)}
-                className={`btn text-sm ${certificateCategory === cat ? 'btn-primary' : 'btn-outline'}`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {certificates
-              .filter(cert => certificateCategory === 'All' || cert.category === certificateCategory)
-              .map((certificate, index) => (
-                <div 
-                  key={certificate.name} 
-                  className="card bg-[rgba(28,28,28,1)] border border-[rgba(38,38,38,1)] hover:border-[rgba(255,255,255,0.2)] transition-all duration-300"
-                >
-                  <div 
-                    className="relative w-full h-48 cursor-pointer"
-                    onClick={() => {
-                      setPopupImageUrl(certificate.image);
-                      setIsImagePopupOpen(true);
-                    }}
-                  >
-                    <Image
-                      src={certificate.image}
-                      alt={certificate.name}
-                      layout="fill"
-                      objectFit="contain"
-                      className="p-4"
-                    />
-                  </div>
-                  <div className="p-6">
-                    <h3 className="text-lg font-semibold mb-2 text-white">{certificate.name}</h3>
-                    <p className="text-[rgba(255,255,255,0.7)] text-sm mb-4">{certificate.description}</p>
-                    
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {certificate.skills.slice(0, 3).map((skill) => (
-                        <span key={skill} className="badge text-xs">{skill}</span>
-                      ))}
-                      {certificate.skills.length > 3 && (
-                        <span className="badge text-xs">+{certificate.skills.length - 3}</span>
-                      )}
-                    </div>
-
-                    <div className="flex justify-between items-center text-sm text-[rgba(255,255,255,0.6)]">
-                      <span>{certificate.issuer}</span>
-                      <span>{certificate.date}</span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Image Popup */}
-      {isImagePopupOpen && popupImageUrl && (
-        <div 
-          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
-          onClick={() => setIsImagePopupOpen(false)}
-        >
-          <button 
-            onClick={() => setIsImagePopupOpen(false)}
-            className="absolute top-4 right-4 text-white/70 hover:text-white p-2"
-          >
-            <X size={24} />
-          </button>
-          <div className="relative w-full max-w-4xl h-[80vh]">
-            <Image
-              src={popupImageUrl}
-              alt="Certificate"
-              layout="fill"
-              objectFit="contain"
-            />
-          </div>
-        </div>
-      )}
     </main>
   )
 }

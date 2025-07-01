@@ -1,32 +1,10 @@
 'use client'
 
-import { motion, AnimatePresence } from 'framer-motion'
 import { Github, ExternalLink, X } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-
-interface MediaItem {
-  type: 'image' | 'video';
-  url: string;
-  caption: string;
-}
-
-export interface Project {
-  title: string;
-  description: string;
-  longDescription?: string;
-  technologies: string[];
-  tags?: string[];
-  image: string;
-  github?: string;
-  demo?: string;
-  category: string;
-  date?: string;
-  team?: string;
-  achievements?: string[];
-  media?: MediaItem[];
-}
+import { Project } from '../types/ProjectTypes'
 
 interface ProjectsProps {
   projects: Project[];
