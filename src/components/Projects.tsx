@@ -2,7 +2,6 @@
 
 import { Github, ExternalLink, X } from 'lucide-react'
 import Image from 'next/image'
-import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { Project } from '../types/ProjectTypes'
 
@@ -23,7 +22,6 @@ export default function Projects({
   selectedProject,
   onSetSelectedProject,
 }: ProjectsProps) {
-  const { basePath } = useRouter();
   const [selectedMediaIndex, setSelectedMediaIndex] = useState(0);
 
   const filteredProjects = currentCategory === 'All'
@@ -54,14 +52,14 @@ export default function Projects({
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProjects.map((project, index) => (
+          {filteredProjects.map((project) => (
             <div 
-              key={project.title + index} 
-              className="card project-card group bg-[rgba(28,28,28,1)] border border-[rgba(38,38,38,1)] hover:border-[rgba(255,255,255,0.2)] hover:shadow-lg transition-all duration-300 overflow-hidden"
+              key={project.title} 
+              className="card project-card group bg-[rgba(28,28,28,1)] border border-[rgba(38,38,38,1)] hover:border-[rgba(255,255,255,0.2)] transition-all duration-300 overflow-hidden"
             >
               <div className="relative w-full h-48 overflow-hidden">
                 <Image
-                  src={basePath + project.image}
+                  src={project.image}
                   alt={project.title}
                   layout="fill"
                   objectFit="cover"
@@ -136,7 +134,7 @@ export default function Projects({
                 <div className="relative w-full h-64 md:h-80 bg-[rgba(20,20,20,1)] mb-6">
                   {selectedProject.media[selectedMediaIndex]?.type === 'image' && (
                     <Image 
-                      src={basePath + selectedProject.media[selectedMediaIndex].url}
+                      src={selectedProject.media[selectedMediaIndex].url}
                       alt={selectedProject.media[selectedMediaIndex].caption || `Media ${selectedMediaIndex + 1} for ${selectedProject.title}`}
                       layout="fill"
                       objectFit="contain"
@@ -145,7 +143,7 @@ export default function Projects({
                   )}
                   {selectedProject.media[selectedMediaIndex]?.type === 'video' && (
                     <video
-                      src={basePath + selectedProject.media[selectedMediaIndex].url}
+                      src={selectedProject.media[selectedMediaIndex].url}
                       className="w-full h-full object-contain rounded-t-lg"
                       controls
                       autoPlay={false}
@@ -155,12 +153,12 @@ export default function Projects({
                   )}
                   {selectedProject.media.length > 1 && (
                     <div className="absolute inset-x-0 bottom-4 flex justify-center gap-2">
-                      {selectedProject.media.map((item, index) => (
+                      {selectedProject.media.map((_, index) => (
                         <button
                           key={index}
                           onClick={() => setSelectedMediaIndex(index)}
                           className={`w-2.5 h-2.5 rounded-full transition-colors ${index === selectedMediaIndex ? 'bg-white' : 'bg-white/40 hover:bg-white/70'}`}
-                          aria-label={`View media ${index + 1}: ${item.caption}`}
+                          aria-label={`View media ${index + 1}`}
                         />
                       ))}
                     </div>
@@ -207,21 +205,21 @@ export default function Projects({
                 <div className="mb-6">
                   <h4 className="text-sm uppercase tracking-wider text-[rgba(255,255,255,0.5)] mb-2">Technologies Used</h4>
                   <div className="flex flex-wrap gap-2">
-                    {(selectedProject.tags || selectedProject.technologies)?.map((tech, idx) => (
-                      <span key={idx} className="badge bg-[rgba(38,38,38,1)] text-[rgba(255,255,255,0.8)]">{tech}</span>
+                    {(selectedProject.tags || selectedProject.technologies)?.map((tech) => (
+                      <span key={tech} className="badge bg-[rgba(38,38,38,1)] text-[rgba(255,255,255,0.8)]">{tech}</span>
                     ))}
                   </div>
                 </div>
                 
                 <div className="flex flex-wrap gap-4 mt-8 pt-6 border-t border-[rgba(48,48,48,1)]">
                   {selectedProject.github && (
-                    <a href={selectedProject.github} target="_blank" rel="noopener noreferrer" className="btn btn-outline flex items-center gap-2">
+                    <a href={selectedProject.github} target="_blank" rel="noopener noreferrer" className="btn btn-outline flex items-center gap-2 hover:scale-105 transform transition-all duration-300">
                       <Github size={18} />
                       <span>View on GitHub</span>
                     </a>
                   )}
                   {selectedProject.demo && (
-                    <a href={selectedProject.demo} target="_blank" rel="noopener noreferrer" className="btn btn-primary flex items-center gap-2">
+                    <a href={selectedProject.demo} target="_blank" rel="noopener noreferrer" className="btn btn-primary flex items-center gap-2 hover:scale-105 transform transition-all duration-300">
                       <ExternalLink size={18} />
                       <span>View Live Demo</span>
                     </a>

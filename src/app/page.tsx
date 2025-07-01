@@ -57,7 +57,7 @@ export default function Home() {
               transition={{ duration: 0.5 }}
             >
               <motion.img 
-                src="/profile.jpg" 
+                src="portfolio/profile.jpg" 
                 alt="Vaibhav Jain" 
                 width={160} 
                 height={160} 
@@ -65,7 +65,7 @@ export default function Home() {
               />
               <div className="absolute inset-0 bg-gradient-to-tr from-[rgba(var(--primary-rgb),0.1)] to-transparent"></div>
             </motion.div>
-
+            
             <motion.h1 
               className="text-4xl md:text-6xl xl:text-7xl font-bold mb-4"
               initial={{ opacity: 0, y: 20 }}
@@ -160,8 +160,8 @@ export default function Home() {
               <a
                 href="/2228077_RAG_resume.pdf"
                 className="btn btn-outline flex items-center gap-2 relative overflow-hidden group"
-                target="_blank"
-                rel="noopener noreferrer"
+          target="_blank"
+          rel="noopener noreferrer"
               >
                 <FileText size={16} className="relative z-10" />
                 <span className="relative z-10">Resume</span>

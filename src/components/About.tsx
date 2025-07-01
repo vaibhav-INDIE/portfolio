@@ -121,16 +121,16 @@ export default function About() {
                 <div className="flex items-center gap-3 mb-4">
                   {skill.icon && <skill.icon className="text-2xl text-primary" />}
                   <h3 className="text-lg font-semibold text-white">{skill.category}</h3>
-                </div>
+            </div>
                 <ul className="space-y-2">
                   {skill.items.map((item) => (
                     <li key={item.name} className="text-[rgba(255,255,255,0.7)] text-sm">
-                      {item.name}
-                    </li>
-                  ))}
-                </ul>
+                        {item.name}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
-            </div>
           ))}
         </div>
       </div>

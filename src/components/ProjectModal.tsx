@@ -2,7 +2,6 @@
 'use client'
 
 import Image from 'next/image'
-import { useRouter } from 'next/router';
 import { X, Github, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react'
 import { Project, ProjectMedia } from '../types/ProjectTypes'
 
@@ -19,7 +18,6 @@ export default function ProjectModal({
   selectedMediaIndex,
   onSetSelectedMediaIndex
 }: ProjectModalProps) {
-  const { basePath } = useRouter();
   if (!project) return null;
 
   const currentMedia = project.media && project.media[selectedMediaIndex] as ProjectMedia | undefined;
@@ -41,7 +39,7 @@ export default function ProjectModal({
       >
         <div
           className="bg-[rgba(30,30,30,1)] rounded-lg shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto relative"
-          onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside modal
+          onClick={(e) => e.stopPropagation()}
         >
           <button
             onClick={onClose}
@@ -59,7 +57,7 @@ export default function ProjectModal({
                   src={currentMedia.url}
                   alt={currentMedia.caption || project.title}
                   layout="fill"
-                  objectFit="contain" // Use contain to see full image
+                  objectFit="contain"
                 />
               </div>
 
@@ -86,25 +84,25 @@ export default function ProjectModal({
                   <p className="text-white text-sm">{currentMedia.caption}</p>
                 </div>
               )}
-               {/* Dots Indicator */}
+              {/* Dots Indicator */}
               {project.media.length > 1 && (
-                  <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex space-x-2 p-2">
-                      {project.media.map((_, idx) => (
-                      <button
-                          key={idx}
-                          onClick={() => onSetSelectedMediaIndex(idx)}
-                          className={`w-2.5 h-2.5 rounded-full ${idx === selectedMediaIndex ? 'bg-white' : 'bg-white/40 hover:bg-white/60'} transition-colors`}
-                          aria-label={`Go to image ${idx + 1}`}
-                      />
-                      ))}
-                  </div>
+                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex space-x-2 p-2">
+                  {project.media.map((_, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => onSetSelectedMediaIndex(idx)}
+                      className={`w-2.5 h-2.5 rounded-full ${idx === selectedMediaIndex ? 'bg-white' : 'bg-white/40 hover:bg-white/60'} transition-colors`}
+                      aria-label={`Go to image ${idx + 1}`}
+                    />
+                  ))}
+                </div>
               )}
             </div>
           ) : (
             project.image && (
               <div className="relative w-full aspect-video bg-black">
                 <Image
-                  src={basePath + project.image}
+                  src={project.image}
                   alt={project.title}
                   layout="fill"
                   objectFit="contain"
@@ -143,7 +141,7 @@ export default function ProjectModal({
               <div className="mb-6">
                 <h4 className="text-lg font-semibold text-white mb-2">Key Achievements:</h4>
                 <ul className="list-disc list-inside text-[rgba(255,255,255,0.7)] space-y-1">
-                  {(project.achievements || []).map((ach, i) => <li key={i}>{ach}</li>)}
+                  {project.achievements.map((ach, i) => <li key={i}>{ach}</li>)}
                 </ul>
               </div>
             )}
@@ -151,7 +149,7 @@ export default function ProjectModal({
             <div className="mb-6">
               <h4 className="text-lg font-semibold text-white mb-2">Technologies Used:</h4>
               <div className="flex flex-wrap gap-2">
-                {(project.technologies || []).map((tech) => (
+                {project.technologies.map((tech) => (
                   <span key={tech} className="badge badge-lg">{tech}</span>
                 ))}
               </div>
