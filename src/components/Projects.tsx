@@ -21,7 +21,7 @@ const ProjectCard = memo(({ project, onSelect }: { project: Project; onSelect: (
   >
     <div className="relative w-full h-48 overflow-hidden">
       <Image
-        src={`/portfolio${project.image}`}
+        src={`${project.image}`}
         alt={project.title}
         width={800}
         height={600}
@@ -99,7 +99,7 @@ const ProjectModal = memo(({ project, onClose, mediaIndex, onMediaIndexChange }:
           <div className="relative w-full h-64 md:h-80 bg-[rgba(20,20,20,1)] mb-6">
             {project.media[mediaIndex]?.type === 'image' && (
               <Image 
-                src={`/portfolio${project.media[mediaIndex].url}`}
+                src={`${project.media[mediaIndex].url}`}
                 alt={project.media[mediaIndex].caption || `Media ${mediaIndex + 1} for ${project.title}`}
                 width={1200}
                 height={800}
@@ -108,7 +108,7 @@ const ProjectModal = memo(({ project, onClose, mediaIndex, onMediaIndexChange }:
             )}
             {project.media[mediaIndex]?.type === 'video' && (
               <video
-                src={`/portfolio${project.media[mediaIndex].url}`}
+                src={`${project.media[mediaIndex].url}`}
                 className="w-full h-full object-contain rounded-t-lg"
                 controls
                 autoPlay={false}

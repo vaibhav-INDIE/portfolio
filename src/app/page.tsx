@@ -234,7 +234,7 @@ export default function Home() {
                   <div className="relative w-full md:w-64 h-48 md:h-auto bg-[rgba(20,20,20,1)] flex items-center justify-center p-6">
                     <div className="relative w-full h-full">
                       <Image
-                        src={`/portfolio${work.image}`}
+                        src={`${work.image}`}
                         alt={work.company}
                         fill
                         className="object-contain group-hover:scale-105 transition-transform duration-300"
@@ -322,7 +322,7 @@ export default function Home() {
               >
                 <div className="relative w-full h-48 overflow-hidden">
                   <Image
-                    src={`/portfolio${cert.image}`}
+                    src={`${cert.image}`}
                     alt={cert.name}
                     width={800}
                     height={600}
@@ -370,7 +370,7 @@ export default function Home() {
             <div className="max-h-[85vh] overflow-y-auto custom-scrollbar">
               <div className="relative w-full h-[60vh] bg-[rgba(20,20,20,1)]">
                 <Image 
-                  src={`/portfolio${selectedCertificate.image}`}
+                  src={`${selectedCertificate.image}`}
                   alt={selectedCertificate.name}
                   fill
                   className="object-contain"
