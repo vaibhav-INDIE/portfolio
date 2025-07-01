@@ -220,14 +220,17 @@ export default function Home() {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
                 <div className="flex flex-col md:flex-row">
-                  <div className="relative w-full md:w-64 h-48 overflow-hidden">
-                    <Image
-                      src={`/portfolio${work.image}`}
-                      alt={work.company}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                    <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-all duration-300"></div>
+                  <div className="relative w-full md:w-64 h-48 overflow-hidden bg-[rgba(20,20,20,1)]">
+                    <div className="absolute inset-0 flex items-center justify-center p-4">
+                      <Image
+                        src={`/portfolio${work.image}`}
+                        alt={work.company}
+                        fill
+                        className="object-contain group-hover:scale-105 transition-transform duration-300"
+                        style={{ objectFit: 'contain' }}
+                      />
+                    </div>
+                    <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-all duration-300"></div>
                   </div>
                   
                   <div className="p-6 md:p-8 flex-1">
