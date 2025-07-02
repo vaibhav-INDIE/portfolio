@@ -455,3 +455,94 @@ export const projects: Project[] = [
     ]
 }
 ];
+
+// Subjects data
+
+export const academicsData = [
+  {
+    semester: 'Semester 1',
+    courses: [
+      { name: 'Physics', code: 'PH10001', grade: 'A', type: 'Core', description: 'Fundamental principles of classical and modern physics, including mechanics, electromagnetism, and optics.', topics: ['Mechanics', 'Thermodynamics', 'Electromagnetism', 'Optics'] },
+      { name: 'Differential Equations and Linear Algebra', code: 'MA11001', grade: 'A', type: 'Core', description: 'Core mathematical concepts essential for engineering, focusing on solving differential equations and understanding vector spaces.', topics: ['ODEs', 'Linear Transformations', 'Eigenvalues', 'Vector Spaces'] },
+      { name: 'Science of Living Systems', code: 'LS10001', grade: 'B', type: 'Elective', description: 'An introductory course to the principles of biology, genetics, and ecological systems.', topics: ['Cell Biology', 'Genetics', 'Ecology', 'Human Physiology'] },
+      { name: 'Environmental Science', code: 'CH10003', grade: 'E', type: 'Elective', description: 'Study of environmental systems, pollution, and sustainable resource management.', topics: ['Ecosystems', 'Pollution Control', 'Sustainability', 'Climate Change'] },
+      { name: 'Physics Lab', code: 'PH19001', grade: 'E', type: 'Core', description: 'Practical experiments to verify theoretical physics concepts learned in the classroom.', topics: ['Measurement', 'Data Analysis', 'Experimentation'] },
+      { name: 'Programming Lab', code: 'CS13001', grade: 'E', type: 'Core', description: 'Hands-on programming exercises to build foundational coding skills, likely in C or Python.', topics: ['Algorithms', 'Control Structures', 'Data Types', 'Debugging'] },
+      { name: 'Engineering Drawing and Graphics', code: 'CE18001', grade: 'E', type: 'Core', description: 'Introduction to technical drawing standards, orthographic projection, and CAD software.', topics: ['Orthographic Projection', 'Isometric Views', 'CAD', 'Drafting'] },
+      { name: 'Basic Instrumentation', code: 'EE10003', grade: 'E', type: 'Core', description: 'Principles of electronic measurement instruments and data acquisition systems.', topics: ['Sensors', 'Transducers', 'Signal Conditioning', 'Measurement'] },
+      { name: 'Optimization Technique', code: 'MA10003', grade: 'E', type: 'Core', description: 'Introduction to mathematical optimization methods for solving engineering problems.', topics: ['Linear Programming', 'Non-linear Optimization', 'Heuristics'] },
+    ],
+  },
+  {
+    semester: 'Semester 2',
+    courses: [
+      { name: 'Chemistry', code: 'CH10001', grade: 'A', type: 'Core', description: 'Fundamental concepts of chemistry, including atomic structure, bonding, and chemical reactions.', topics: ['Atomic Structure', 'Chemical Bonding', 'Thermodynamics', 'Kinetics'] },
+      { name: 'English', code: 'HS10001', grade: 'E', type: 'Elective', description: 'Enhancing communication skills, including technical writing, presentation, and comprehension.', topics: ['Technical Writing', 'Presentation Skills', 'Communication'] },
+      { name: 'Basic Electronics', code: 'EC10001', grade: 'E', type: 'Core', description: 'Introduction to electronic components like diodes, transistors, and operational amplifiers.', topics: ['Semiconductors', 'Diodes', 'Transistors', 'Op-Amps'] },
+      { name: 'Chemistry Lab', code: 'CH19001', grade: 'A', type: 'Core', description: 'Practical laboratory work to supplement theoretical chemistry concepts.', topics: ['Titration', 'Synthesis', 'Qualitative Analysis'] },
+      { name: 'Yoga', code: 'YG18001', grade: 'E', type: 'Elective', description: 'A course on the practice and philosophy of yoga for physical and mental well-being.', topics: ['Asanas', 'Pranayama', 'Meditation', 'Wellness'] },
+      { name: 'Engineering Lab', code: 'EX19001', grade: 'A', type: 'Core', description: 'A multidisciplinary lab covering various engineering principles and practices.', topics: ['Prototyping', 'Experimentation', 'Teamwork'] },
+      { name: 'Workshop', code: 'ME18001', grade: 'A', type: 'Core', description: 'Hands-on experience with manufacturing processes like welding, fitting, and machining.', topics: ['Machining', 'Welding', 'Fitting', 'Carpentry'] },
+      { name: 'Communication Lab', code: 'HS18001', grade: 'A', type: 'Core', description: 'Practical sessions to improve verbal and non-verbal communication skills.', topics: ['Public Speaking', 'Group Discussions', 'Interviews'] },
+      { name: 'Basic Civil Engineering', code: 'CE10001', grade: 'A', type: 'Core', description: 'An overview of civil engineering principles, including structures, materials, and surveying.', topics: ['Building Materials', 'Surveying', 'Structural Basics'] },
+      { name: 'Community/Environment-based Project', code: 'EX17001', grade: 'O', type: 'Elective', description: 'A project-based course focused on addressing local community or environmental challenges.', topics: ['Project Management', 'Community Engagement', 'Problem Solving'] },
+      { name: 'Transforms and Numerical Methods', code: 'MA11002', grade: 'A', type: 'Core', description: 'Study of mathematical transforms (like Laplace, Fourier) and numerical techniques for solving complex problems.', topics: ['Fourier Transform', 'Laplace Transform', 'Numerical Integration', 'Root Finding'] },
+    ],
+  },
+  {
+    semester: 'Semester 3',
+    courses: [
+      { name: 'Scientific and Technical Writing', code: 'EX20003', grade: 'A', type: 'Core', description: 'Advanced course on writing research papers, technical reports, and documentation.', topics: ['Technical Documentation', 'Research Papers', 'Citation Styles'] },
+      { name: 'Probability and Statistics', code: 'MA21001', grade: 'A', type: 'Core', description: 'The mathematical foundation for data analysis, covering probability theory and statistical inference.', topics: ['Probability Distributions', 'Hypothesis Testing', 'Regression', 'Bayesian Theory'] },
+      { name: 'Digital Systems Design', code: 'EC20005', grade: 'A', type: 'Core', description: 'Designing and analyzing digital logic circuits, from basic gates to sequential and combinational systems.', topics: ['Boolean Algebra', 'Logic Gates', 'State Machines', 'VHDL/Verilog'] },
+      { name: 'Digital Systems Design Laboratory', code: 'EC29005', grade: 'E', type: 'Core', description: 'Hands-on lab for designing, simulating, and implementing digital circuits.', topics: ['Circuit Simulation', 'FPGA Programming', 'Hardware Debugging'] },
+      { name: 'Data Structures', code: 'CM21001', grade: 'E', type: 'Core', description: 'In-depth study of fundamental data structures and their application in efficient algorithm design.', topics: ['Arrays', 'Linked Lists', 'Trees', 'Graphs', 'Hashing'] },
+      { name: 'Object Oriented Programming using Java', code: 'CM20004', grade: 'B', type: 'Core', description: 'Mastering the principles of OOP, including encapsulation, inheritance, and polymorphism, through Java.', topics: ['Java', 'Inheritance', 'Polymorphism', 'Design Patterns'] },
+      { name: 'Computer Organization and Architecture', code: 'CM21002', grade: 'A', type: 'Core', description: 'Understanding the internal workings of a computer, including CPU design, memory hierarchy, and instruction sets.', topics: ['CPU Architecture', 'Memory Hierarchy', 'Pipelining', 'Assembly Language'] },
+      { name: 'Data Structures Laboratory', code: 'CM29001', grade: 'E', type: 'Core', description: 'Practical implementation of various data structures and algorithms to solve complex problems.', topics: ['Algorithm Implementation', 'Performance Analysis', 'Debugging'] },
+      { name: 'Java Programming Laboratory', code: 'CM29004', grade: 'A', type: 'Core', description: 'Hands-on projects and assignments to solidify Java and OOP programming skills.', topics: ['GUI Programming', 'Multithreading', 'API Usage'] },
+    ],
+  },
+  {
+    semester: 'Semester 4',
+    courses: [
+      { name: 'Industry 4.0 Technologies', code: 'EX20001', grade: 'E', type: 'Elective', description: 'An exploration of modern industrial technologies like IoT, AI, and automation.', topics: ['IoT', 'Big Data', 'Cyber-Physical Systems', 'Automation'] },
+      { name: 'Discrete Mathematics', code: 'MA21002', grade: 'O', type: 'Core', description: 'The mathematical foundation of computer science, covering logic, set theory, and graph theory.', topics: ['Logic & Proofs', 'Set Theory', 'Graph Theory', 'Combinatorics'] },
+      { name: 'Engineering Economics', code: 'HS30101', grade: 'A', type: 'Core', description: 'Applying economic principles to engineering decisions, including cost analysis and project evaluation.', topics: ['Cost-Benefit Analysis', 'Time Value of Money', 'Project Evaluation'] },
+      { name: 'Principle of Signals & Systems', code: 'EC20006', grade: 'O', type: 'Core', description: 'Analysis of continuous and discrete-time signals and systems in time and frequency domains.', topics: ['LTI Systems', 'Convolution', 'Fourier Analysis', 'Z-Transform'] },
+      { name: 'Operating Systems', code: 'CM20002', grade: 'B', type: 'Core', description: 'A study of the principles behind operating systems, including process management, memory, and file systems.', topics: ['Process Scheduling', 'Memory Management', 'Concurrency', 'File Systems'] },
+      { name: 'Database Management Systems', code: 'CM20006', grade: 'E', type: 'Core', description: 'Comprehensive study of relational databases, including data modeling, SQL, and transaction management.', topics: ['SQL', 'ER Modeling', 'Normalization', 'ACID Properties'] },
+      { name: 'Operating Systems Laboratory', code: 'CM29002', grade: 'E', type: 'Core', description: 'Practical exercises in OS concepts, such as shell scripting and system calls.', topics: ['Shell Scripting', 'System Calls', 'Process Synchronization'] },
+      { name: 'Database Management Systems Laboratory', code: 'CM29006', grade: 'E', type: 'Core', description: 'Hands-on lab for designing databases and writing complex SQL queries.', topics: ['Schema Design', 'Advanced SQL', 'Stored Procedures'] },
+      { name: 'Enterprise App Dev using SAP ABAP on HANA', code: 'KS28001', grade: 'A', type: 'Elective', description: 'Specialized training in developing business applications on the SAP HANA platform using the ABAP language.', topics: ['SAP HANA', 'ABAP', 'Business Applications', 'ERP Systems'] },
+    ],
+  },
+  {
+    semester: 'Semester 5',
+    courses: [
+      { name: 'International Economic Cooperation', code: 'HS20122', grade: 'E', type: 'Elective', description: 'Analysis of global economic policies, trade agreements, and international financial institutions.', topics: ['Globalization', 'Trade Policy', 'International Finance'] },
+      { name: 'Design and Analysis of Algorithms', code: 'CS30001', grade: 'A', type: 'Core', description: 'Advanced study of algorithm design techniques and complexity analysis.', topics: ['Complexity Analysis', 'Divide and Conquer', 'Dynamic Programming', 'Graph Algorithms'] },
+      { name: 'Software Engineering', code: 'CS31001', grade: 'A', type: 'Core', description: 'Principles and practices of the software development lifecycle, from requirements to maintenance.', topics: ['Agile/Scrum', 'UML', 'Design Patterns', 'Testing'] },
+      { name: 'Computer Networks', code: 'CS30003', grade: 'A', type: 'Core', description: 'In-depth study of network protocols, architectures, and the layers of the TCP/IP stack.', topics: ['TCP/IP', 'Routing', 'Switching', 'Network Security'] },
+      { name: 'Algorithms Laboratory', code: 'CS39001', grade: 'O', type: 'Core', description: 'Implementation of advanced algorithms and data structures for performance-critical applications.', topics: ['Competitive Programming', 'Algorithm Optimization'] },
+      { name: 'Computer Networks Laboratory', code: 'CS39003', grade: 'E', type: 'Core', description: 'Practical labs on network configuration, packet analysis, and socket programming.', topics: ['Socket Programming', 'Packet Tracing', 'Router Config'] },
+      { name: 'Artificial Intelligence', code: 'CS30002', grade: 'E', type: 'Core', description: 'An introduction to the field of AI, covering search algorithms, knowledge representation, and machine learning.', topics: ['Search Algorithms', 'Logic', 'Planning', 'Intro to ML'] },
+      { name: 'Indian Classical, Folk & Bollywood Dance', code: 'SA38009', grade: 'B', type: 'Elective', description: 'A cultural and practical exploration of various forms of Indian dance.', topics: ['Cultural Studies', 'Rhythm', 'Choreography', 'Performance'] },
+      { name: 'Machine Learning Concepts', code: 'CS30037', grade: 'E', type: 'Core', description: 'A foundational course in machine learning models, evaluation techniques, and practical applications.', topics: ['Supervised Learning', 'Unsupervised Learning', 'Model Evaluation'] },
+    ],
+  },
+  {
+    semester: 'Semester 6',
+    courses: [
+      { name: 'Accounting for Everyone', code: 'CB1047', grade: 'A', type: 'Elective', description: 'An introductory course on the principles of financial accounting and reporting.', topics: ['Financial Statements', 'Bookkeeping', 'Budgeting'] },
+      { name: 'Universal Human Values', code: 'HS30401', grade: 'E', type: 'Elective', description: 'A course on ethics, values, and their role in personal and professional life.', topics: ['Ethics', 'Values', 'Professional Conduct'] },
+      { name: 'Data Mining and Data Warehousing', code: 'CS30013', grade: 'E', type: 'Core', description: 'Techniques for discovering patterns in large datasets and designing data warehouses for analysis.', topics: ['Data Mining', 'ETL', 'Data Warehousing', 'OLAP'] },
+      { name: 'ARM and Advanced Processors', code: 'EC30007', grade: 'O', type: 'Core', description: 'Deep dive into the architecture and programming of ARM processors for embedded systems.', topics: ['ARM Architecture', 'Assembly', 'Embedded Systems', 'SoC'] },
+      { name: 'Mini Project', code: 'CS37001', grade: 'O', type: 'Core', description: 'A semester-long project to apply learned software engineering and technical skills to a real problem.', topics: ['Project Management', 'Development Lifecycle', 'Teamwork'] },
+      { name: 'Advance Programming Laboratory', code: 'CS39006', grade: 'O', type: 'Core', description: 'A lab focused on advanced programming paradigms and competitive problem-solving.', topics: ['Competitive Programming', 'Advanced Algorithms', 'System Design'] },
+      { name: 'Compilers', code: 'CS30006', grade: 'E', type: 'Core', description: 'Study of the theory and practice of compiler design, from lexical analysis to code generation.', topics: ['Lexical Analysis', 'Parsing', 'Code Optimization', 'Syntax Trees'] },
+      { name: 'ARM Laboratory', code: 'EC39006', grade: 'E', type: 'Core', description: 'Hands-on programming and interfacing with ARM-based microcontrollers.', topics: ['Embedded C', 'Peripherals', 'Debugging', 'RTOS Basics'] },
+      { name: 'Economic Analysis of Decision Rules', code: 'OC30002', grade: 'E', type: 'Elective', description: 'Applying economic and game theory concepts to analyze decision-making strategies.', topics: ['Game Theory', 'Decision Theory', 'Risk Analysis'] },
+    ],
+  },
+];

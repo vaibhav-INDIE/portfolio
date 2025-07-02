@@ -432,6 +432,7 @@ input:focus, textarea:focus, select:focus {
 .custom-scrollbar {
   scrollbar-width: thin;
   scrollbar-color: rgba(var(--primary-rgb), 0.3) rgba(0, 0, 0, 0.2);
+  -webkit-overflow-scrolling: touch; 
 }
 
 .custom-scrollbar::-webkit-scrollbar {
@@ -459,4 +460,22 @@ input:focus, textarea:focus, select:focus {
   line-clamp: 2;  /* Standard property for compatibility */
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  height: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(28, 28, 28, 1);
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(58, 58, 58, 1);
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(var(--primary-rgb), 0.8);
 }

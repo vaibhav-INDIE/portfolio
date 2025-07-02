@@ -3,7 +3,7 @@ import { useEffect, useState, useRef, useMemo } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { Github, Linkedin, Mail, FileText, X } from 'lucide-react'
 import { TypeAnimation } from 'react-type-animation'
-import { projects, certificates, workExperiences } from '../data/portfolio-data'
+import { projects, certificates, workExperiences  } from '../data/portfolio-data'
 import { Project } from '../types/ProjectTypes'
 import Footer from '@/components/footer';
 import dynamic from 'next/dynamic'
@@ -25,7 +25,7 @@ const projectCategories = ['All', ...Array.from(new Set(projects.map(project => 
 const certificateCategories = ['All', ...Array.from(new Set(certificates.map(cert => cert.category)))]
 
 export default function Home() {
-  const [mounted, setMounted] = useState(false);
+  const [, setMounted] = useState(false);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [projectCategory, setProjectCategory] = useState('All');
   const [certCategory, setCertCategory] = useState('All');
@@ -34,8 +34,14 @@ export default function Home() {
   
   const { scrollYProgress } = useScroll({
     target: heroRef,
-    offset: ['start start', 'end start']
-  })
+    offset: ['start start', 'end start'],
+    layoutEffect: false // <--- THE FIX IS HERE
+    })
+
+    const Academics = dynamic(() => import('../components/Academics'), {
+    ssr: false,
+    loading: () => <div className="min-h-screen bg-[rgba(16,16,16,1)]" />
+    })
 
   // Memoize transform values
   const opacity = useTransform(scrollYProgress, [0, 1], [1, 0])
@@ -54,12 +60,10 @@ export default function Home() {
     return certCategory === 'All' ? certificates : certificates.filter(cert => cert.category === certCategory);
   }, [certCategory]);
 
-  if (!mounted) {
-    return null;
-  }
+
 
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen relative">
       {/* Hero Section */}
       <section 
         ref={heroRef} 
@@ -204,7 +208,11 @@ export default function Home() {
       {/* About/Skills Section */}
       <About />
 
-      {/* Work Experience Section */}
+      {/* ADD THE NEW ACADEMICS SECTION HERE */}
+      <Academics />
+
+
+     {/* Work Experience Section */}
       <section id="work" className="section py-24 bg-black">
         <div className="container mx-auto px-6 max-w-6xl">
           <motion.div 
@@ -214,11 +222,12 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="bg-gradient-to-r from-white via-[rgba(var(--primary-rgb),0.8)] to-white 
-               bg-[length:200%_auto] bg-clip-text text-transparent animate-flow-x">
+            {/* Text Centered for IOS */}
+            <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-white via-[rgba(var(--primary-rgb),0.8)] to-white 
+              bg-[length:200%_auto] bg-clip-text text-transparent animate-flow-x text-center">
               <span>Work Experience and Industry Trainings</span>
             </h2>
-            <div className="h-1 w-32 bg-gradient-to-r from-transparent via-[rgba(var(--primary-rgb),0.7)] to-transparent"></div>
+            <div className="h-1 w-32 bg-gradient-to-r from-transparent via-[rgba(var(--primary-rgb),0.7)] to-transparent mt-4"></div>
           </motion.div>
           
           <div className="space-y-8">
@@ -227,8 +236,9 @@ export default function Home() {
                 key={work.title}
                 className="card bg-[rgba(28,28,28,1)] border border-[rgba(38,38,38,1)] hover:border-[rgba(255,255,255,0.2)] transition-all duration-300 overflow-hidden group"
                 initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true, amount: 0.3 }} // Added viewport settings for better staggered animation
               >
                 <div className="flex flex-col md:flex-row">
                   <div className="relative w-full md:w-64 h-48 md:h-auto bg-[rgba(20,20,20,1)] flex items-center justify-center p-6">
@@ -254,7 +264,6 @@ export default function Home() {
                         <ul className="space-y-3 mb-6">
                           {work.description.map((desc, idx) => (
                             <li key={idx} className="text-[rgba(255,255,255,0.7)] text-sm flex items-baseline">
-                              {/* Change mr-2 to mr-1.5 here */}
                               <span className="text-primary mr-1.5 text-base leading-[1]">•</span>
                               <span>{desc}</span>
                             </li>
@@ -293,14 +302,12 @@ export default function Home() {
       <section id="certificates" className="section py-24 bg-black">
         <div className="container mx-auto px-6 max-w-6xl">
           <div className="flex flex-col items-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white text-center">
               <span className="animate-flow-x bg-gradient-to-r from-white via-primary to-white bg-[length:200%_auto] bg-clip-text text-transparent">
                 Certificates & Achievements
               </span>
             </h2>
-            <div className="h-1 w-32 bg-gradient-to-r from-transparent via-[rgba(var(--primary-rgb),0.7)] to-transparent"></div>
-          </div>
-
+          <div className="h-1 w-32 bg-gradient-to-r from-transparent via-[rgba(var(--primary-rgb),0.7)] to-transparent mt-4"></div>          </div>
           <div className="flex flex-wrap justify-center gap-3 mb-10">
             {certificateCategories.map((cat) => (
               <button
@@ -407,3 +414,4 @@ export default function Home() {
     </main>
   )
 }
+
