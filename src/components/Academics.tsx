@@ -1,10 +1,80 @@
 // In /components/Academics.tsx
 
 'use client'
-import { useState, useMemo } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useState, useMemo, useEffect, useRef } from 'react'
+import { motion, AnimatePresence, useInView, animate } from 'framer-motion'
 import { academicsData } from '../data/portfolio-data'
 import { BookOpenCheck, Star, X, Hash } from 'lucide-react'
+import { random } from '../utils/random' // Assuming a utility function for random numbers
+
+// --- TROPHY SHINE EFFECT ---
+const TrophyShine = () => {
+  return (
+    <motion.div
+      className="absolute inset-0"
+      initial={{ x: "-150%", rotate: -45 }}
+      animate={{ x: "150%" }}
+      transition={{
+        repeat: Infinity,
+        repeatType: 'loop',
+        repeatDelay: 4,
+        duration: 1.5,
+        ease: 'easeOut'
+      }}
+    >
+      <div className="w-1/2 h-full bg-gradient-to-r from-transparent via-white/60 to-transparent" />
+    </motion.div>
+  );
+};
+
+// --- SUBTLE SPARKLES EFFECT ---
+const Sparkles = () => {
+  const sparkles = Array.from({ length: 20 });
+  return (
+    <>
+      {sparkles.map((_, i) => {
+        const size = random(1, 3);
+        const delay = random(0, 5);
+        const duration = random(2, 4);
+
+        return (
+          <motion.div
+            key={i}
+            className="absolute rounded-full bg-yellow-200/50"
+            style={{
+              top: `${random(0, 100)}%`,
+              left: `${random(0, 100)}%`,
+              width: `${size}px`,
+              height: `${size}px`,
+            }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: [0, 1, 0] }}
+            transition={{
+              duration,
+              delay,
+              repeat: Infinity,
+              repeatType: 'loop',
+            }}
+          />
+        );
+      })}
+    </>
+  );
+};
+
+// --- WRAPPER FOR BOTH EFFECTS ---
+const ShimmerHighlight = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <div className="relative inline-block overflow-hidden">
+      {children}
+      <div className="absolute inset-0 z-10 pointer-events-none">
+        <Sparkles />
+        <TrophyShine />
+      </div>
+    </div>
+  );
+};
+
 
 type Course = {
   name: string;
@@ -24,6 +94,37 @@ const getGradeColor = (grade: string) => {
   return 'text-orange-400';
 };
 
+function Counter({ to }: { to: number }) {
+  const ref = useRef<HTMLHeadingElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  useEffect(() => {
+    if (isInView && ref.current) {
+      const node = ref.current;
+      const controls = animate(0, to, {
+        duration: 2,
+        ease: "easeOut",
+        onUpdate(value) {
+          node.textContent = value.toFixed(2);
+        },
+      });
+      return () => controls.stop();
+    }
+  }, [isInView, to]);
+
+  return (
+    <ShimmerHighlight>
+      <h3
+        ref={ref}
+        className="text-6xl md:text-7xl font-bold text-amber-400 [text-shadow:0_0_8px_rgba(252,211,77,0.3)]"
+      >
+        0.00
+      </h3>
+    </ShimmerHighlight>
+  );
+}
+
+
 export default function Academics() {
   const [activeSemester, setActiveSemester] = useState(academicsData[0].semester);
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
@@ -42,12 +143,45 @@ export default function Academics() {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <h2 className="bg-gradient-to-r from-white via-primary to-white bg-[length:200%_auto] bg-clip-text text-transparent animate-flow-x">
+          <h2 className="text-center bg-gradient-to-r from-white via-primary to-white bg-[length:200%_auto] bg-clip-text text-transparent animate-flow-x">
             <span>Academic Coursework</span>
           </h2>
           <div className="h-1 w-32 bg-gradient-to-r from-transparent via-[rgba(var(--primary-rgb),0.7)] to-transparent"></div>
         </motion.div>
         
+        <div className="text-center mb-16">
+          <motion.div 
+            className="mb-8"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            viewport={{ once: true }}
+          >
+            <p className="text-sm uppercase tracking-wider text-gray-400 mb-2">Current Cumulative GPA</p>
+            <Counter to={8.61} />
+          </motion.div>
+          
+          <motion.div 
+            className="text-sm text-gray-400"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+          >
+            <p className="mb-2">Grading Scale (Highest to Lowest):</p>
+             {/* --- FIX: Added the '>' characters back in --- */}
+            <div className="flex justify-center items-baseline flex-wrap gap-x-3 text-xs md:text-sm">
+              <span><span className={`font-bold ${getGradeColor('O')}`}>O</span> (Outstanding)</span>
+              <span className="text-gray-500"></span>
+              <span><span className={`font-bold ${getGradeColor('E')}`}>E</span> (Excellent)</span>
+              <span className="text-gray-500"></span>
+              <span><span className={`font-bold ${getGradeColor('A')}`}>A</span> (Very Good)</span>
+              <span className="text-gray-500"></span>
+              <span><span className={`font-bold ${getGradeColor('B')}`}>B</span> (Good)</span>
+            </div>
+          </motion.div>
+        </div>
+
+
         <div className="flex flex-wrap justify-center gap-3 mb-12">
           {academicsData.map((data) => (
             <button
@@ -76,7 +210,6 @@ export default function Academics() {
                 key={course.code}
                 className="card bg-[rgba(28,28,28,0.8)] border border-[rgba(38,38,38,1)] p-5 flex flex-col justify-between hover:border-primary/50 transition-colors duration-300 cursor-pointer w-64 flex-shrink-0"
                 onClick={() => setSelectedCourse(course)}
-                // --- CHANGE 1: REMOVED the layoutId prop from here ---
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.05 }}
@@ -100,6 +233,7 @@ export default function Academics() {
         </AnimatePresence>
       </div>
 
+      {/* --- ADDED BACK: The modal (pop-up) for course details --- */}
       <AnimatePresence>
         {selectedCourse && (
           <motion.div
@@ -109,7 +243,6 @@ export default function Academics() {
             exit={{ opacity: 0 }}
             onClick={() => setSelectedCourse(null)}
           >
-            {/* --- CHANGE 2: REPLACED layoutId with a standard initial/animate/exit animation --- */}
             <motion.div
               className="modal-content max-w-2xl w-full bg-[rgba(24,24,24,1)] border border-[rgba(48,48,48,1)] rounded-xl shadow-2xl overflow-hidden"
               onClick={(e) => e.stopPropagation()}
