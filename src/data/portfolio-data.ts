@@ -444,7 +444,7 @@ export const projects: Project[] = [
   technologies: ['Full Stack', 'Frontend', 'Portfolio', 'Deployment'],
   image: '/projects/website/out.jpg',
   github: 'https://github.com/vaibhav-INDIE/portfolio',
-  demo: 'https://vaibhav-indie.github.io/portfolio/',
+  demo: 'https://www.cuttu.in',
   category: 'Full Stack',
   date: '2025',
   team: 'Solo Project',
