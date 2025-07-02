@@ -21,6 +21,7 @@ export default function ProjectModal({
   if (!project) return null;
 
   const currentMedia = project.media && project.media[selectedMediaIndex] as ProjectMedia | undefined;
+  
 
   const navigateModalMedia = (direction: 'next' | 'prev') => {
     if (!project || !project.media || project.media.length <= 1) return;
@@ -51,31 +52,46 @@ export default function ProjectModal({
 
           {/* Media Carousel */}
           {project.media && project.media.length > 0 && currentMedia ? (
-            <div className="relative w-full aspect-video bg-black">
+            <div className="relative w-full aspect-video bg-black overflow-visible">
               <div className="w-full h-full">
                 <Image
                   src={currentMedia.url}
                   alt={currentMedia.caption || project.title}
                   layout="fill"
                   objectFit="contain"
+                  className="select-none"
                 />
               </div>
 
               {project.media.length > 1 && (
                 <>
                   <button
-                    onClick={() => navigateModalMedia('prev')}
-                    className="absolute left-2 top-1/2 -translate-y-1/2 p-2 bg-black/50 text-white rounded-full hover:bg-black/70 hover:scale-110 transform transition-all duration-300"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigateModalMedia('prev');
+                    }}
+                    className="absolute left-0 top-1/2 -translate-y-1/2 ml-4 p-4 bg-black/80 text-white rounded-full hover:bg-black hover:scale-110 transform transition-all duration-300 z-50 flex items-center justify-center shadow-lg border border-white/20 w-14 h-14"
                     aria-label="Previous image"
+                    style={{
+                      WebkitTapHighlightColor: 'transparent',
+                      touchAction: 'manipulation'
+                    }}
                   >
-                    <ChevronLeft size={24} />
+                    <ChevronLeft size={32} strokeWidth={3} />
                   </button>
                   <button
-                    onClick={() => navigateModalMedia('next')}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-black/50 text-white rounded-full hover:bg-black/70 hover:scale-110 transform transition-all duration-300"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigateModalMedia('next');
+                    }}
+                    className="absolute right-0 top-1/2 -translate-y-1/2 mr-4 p-4 bg-black/80 text-white rounded-full hover:bg-black hover:scale-110 transform transition-all duration-300 z-50 flex items-center justify-center shadow-lg border border-white/20 w-14 h-14"
                     aria-label="Next image"
+                    style={{
+                      WebkitTapHighlightColor: 'transparent',
+                      touchAction: 'manipulation'
+                    }}
                   >
-                    <ChevronRight size={24} />
+                    <ChevronRight size={32} strokeWidth={3} />
                   </button>
                 </>
               )}

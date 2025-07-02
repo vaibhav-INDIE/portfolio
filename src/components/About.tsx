@@ -126,8 +126,8 @@ export default function About() {
             className="card bg-[rgba(28,28,28,1)] border border-[rgba(38,38,38,1)] hover:border-[rgba(255,255,255,0.2)] transition-all duration-300"
           >
             <div className="p-6">
-              <div className="flex items-center gap-3 mb-4">
-                {skill.icon && <skill.icon className="text-2xl text-primary" />}
+              <div className="flex items-baseline gap-3 mb-4">
+                {skill.icon && <skill.icon className="relative top-[6px] text-2xl text-primary" />}
                 <h3 className="text-lg font-semibold text-white">{skill.category}</h3>
               </div>
               <ul className="space-y-2">

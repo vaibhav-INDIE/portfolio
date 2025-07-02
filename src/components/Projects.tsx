@@ -116,17 +116,48 @@ const ProjectModal = memo(({ project, onClose, mediaIndex, onMediaIndexChange }:
                 aria-label={project.media[mediaIndex].caption || `Video media for ${project.title}`}
               />
             )}
-            {project.media.length > 1 && (
-              <div className="absolute inset-x-0 bottom-4 flex justify-center gap-2">
-                {project.media.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => onMediaIndexChange(index)}
-                    className={`w-2.5 h-2.5 rounded-full transition-colors ${index === mediaIndex ? 'bg-white' : 'bg-white/40 hover:bg-white/70'}`}
-                    aria-label={`View media ${index + 1}`}
-                  />
-                ))}
-              </div>
+            {project.media && project.media.length > 1 && (
+              <>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onMediaIndexChange((mediaIndex - 1 + project.media!.length) % project.media!.length);
+                  }}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-3 bg-black/70 text-white rounded-full hover:bg-black/90 hover:scale-110 transform transition-all duration-300"
+                  aria-label="Previous media"
+                >
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M15 18l-6-6 6-6"/>
+                  </svg>
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onMediaIndexChange((mediaIndex + 1) % project.media!.length);
+                  }}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-3 bg-black/70 text-white rounded-full hover:bg-black/90 hover:scale-110 transform transition-all duration-300"
+                  aria-label="Next media"
+                >
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M9 18l6-6-6-6"/>
+                  </svg>
+                </button>
+                <div className="absolute inset-x-0 bottom-4 flex justify-center gap-2">
+                  {project.media.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onMediaIndexChange(index);
+                      }}
+                      className={`w-2.5 h-2.5 rounded-full transition-colors ${
+                        index === mediaIndex ? 'bg-white' : 'bg-white/40 hover:bg-white/70'
+                      }`}
+                      aria-label={`View media ${index + 1}`}
+                    />
+                  ))}
+                </div>
+              </>
             )}
           </div>
         )}
