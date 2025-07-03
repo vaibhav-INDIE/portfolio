@@ -3,6 +3,7 @@ import { useEffect, useState, useRef, useMemo } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { Github, Linkedin, Mail, FileText, X } from 'lucide-react'
 import { TypeAnimation } from 'react-type-animation'
+import Contact from '../components/Contact'
 import { projects, certificates, workExperiences  } from '../data/portfolio-data'
 import { Project } from '../types/ProjectTypes'
 import Footer from '@/components/footer';
@@ -409,7 +410,10 @@ export default function Home() {
         </div>
       )}
 
-      {/* Footer Modal */}
+      {/* Contact Section */}
+      <Contact />
+      
+      {/* Footer */}
       <Footer />
     </main>
   )
