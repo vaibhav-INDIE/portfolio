@@ -20,13 +20,19 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth">
       <head>
         {/* Google tag (gtag.js) */}
-        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-R1J3VW135K" />
-        <Script id="google-analytics">
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=G-R1J3VW135K`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-R1J3VW135K');
+            
+            gtag('config', 'G-R1J3VW135K', {
+              page_path: window.location.pathname,
+            });
           `}
         </Script>
       </head>
