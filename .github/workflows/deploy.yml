@@ -30,7 +30,6 @@ jobs:
         run: |
           rm -rf .next out
           npm run build
-          npm run export  # Needed to generate static site in 'out'
           touch out/.nojekyll
         env:
           NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
