@@ -2,8 +2,9 @@
   "homepage": "https://www.cuttu.in",
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
-    "deploy": "npm run build && node deploy.js"
+    "build": "next build && next export -o docs",
+    "export": "next export -o docs",
+    "deploy": "npm run build"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",

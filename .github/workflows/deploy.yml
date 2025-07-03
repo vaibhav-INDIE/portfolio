@@ -30,14 +30,17 @@ jobs:
       - name: Build
         run: |
           npm run build
-          touch out/.nojekyll
+          # Ensure docs directory has necessary files
+          touch docs/.nojekyll
+          # List files for debugging
+          ls -la docs/
         env:
           NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './out'
+          path: 'docs/'
 
   deploy:
     environment:
