@@ -2,13 +2,14 @@
 
 import { useState, useEffect } from 'react'
 import { Menu, X } from 'lucide-react'
+import Link from 'next/link'
 
 const navItems = [
-  { name: 'Home', href: '#' },
-  { name: 'About', href: '#about' },
-  { name: 'Work', href: '#work' },
-  { name: 'Projects', href: '#projects' },
-  { name: 'Certificates', href: '#certificates' },
+  { name: 'Home', href: '/' },
+  { name: 'About', href: '/#about' },
+  { name: 'Work', href: '/#work' },
+  { name: 'Projects', href: '/#projects' },
+  { name: 'Certificates', href: '/#certificates' },
 ]
 
 export default function Navigation() {
@@ -32,21 +33,22 @@ export default function Navigation() {
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <a href="#" className="text-xl font-medium tracking-tighter">
+          <Link href="/" className="text-xl font-medium tracking-tighter">
             <span className="font-bold">Vaibhav</span>
             <span className="opacity-70">.Jain</span>
-          </a>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
-              <a
+              <Link
                 key={item.name}
                 href={item.href}
                 className="text-sm font-medium text-[rgba(255,255,255,0.7)] hover:text-white transition-colors"
+                onClick={() => setIsOpen(false)}
               >
                 {item.name}
-              </a>
+              </Link>
             ))}
           </div>
 
@@ -65,14 +67,14 @@ export default function Navigation() {
           <div className="md:hidden pt-4 pb-2">
             <div className="flex flex-col space-y-3 px-2 border-t border-[rgba(255,255,255,0.1)] pt-4">
               {navItems.map((item) => (
-                <a
+                <Link
                   key={item.name}
                   href={item.href}
                   className="text-sm font-medium text-[rgba(255,255,255,0.7)] hover:text-white transition-colors py-1"
                   onClick={() => setIsOpen(false)}
                 >
                   {item.name}
-                </a>
+                </Link>
               ))}
             </div>
           </div>

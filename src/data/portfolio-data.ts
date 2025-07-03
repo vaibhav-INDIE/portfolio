@@ -427,7 +427,7 @@ export const projects: Project[] = [
     technologies: ['Data Science', 'Machine Learning', 'EDA'],
     image: '/projects/sugar/out.jpg',
     github: 'https://github.com/vaibhav-INDIE/Diabetes-Prediction-EDA',
-    demo: '',
+    demo: '/diabetes',
     category: 'Data Science',
     date: '2024',
     team: 'Solo Project',
