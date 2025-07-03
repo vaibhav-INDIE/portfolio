@@ -3,6 +3,7 @@ const path = require('path');
 
 const nextConfig = {
   output: 'export',
+  distDir: 'out', // This is the default output directory
   images: {
     unoptimized: true,
   },
