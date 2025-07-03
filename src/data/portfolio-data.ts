@@ -386,6 +386,24 @@ export const projects: Project[] = [
     ]
   },
   {
+    title: 'Advanced RAG System for Documents',
+    description: 'A RAG-based Q&A system that builds a knowledge base from complex Excel & PDF files and answers natural language queries.',
+    longDescription: `An advanced Retrieval-Augmented Generation (RAG) application built with Streamlit and powered by the Google Gemini API. Users can upload multiple documents (PDFs, complex Excel sheets) to build a vector knowledge base. The system intelligently processes complex table structures, including merged cells, using configurable strategies.\n\nKey Features:\n• Multi-file upload for PDF and Excel (.xlsx).\n• Interactive UI for choosing data extraction strategies (row-by-row, full-sheet as markdown, or custom templates).\n• Handles complex tables with merged cells via forward-filling.\n• Uses Gemini's text-embedding-004 for vectorization and Gemini Pro for generation.\n• Deployed on Streamlit Community Cloud with secure API key management using Streamlit Secrets.`,
+    tags: ['Streamlit', 'Python', 'Gemini API', 'Pandas', 'RAG', 'PyMuPDF'],
+    technologies: ['AI', 'RAG', 'NLP', 'Full Stack', 'Data Processing', 'Deployment'],
+    image: '/projects/rag/img1.jpg', // <-- Make sure you add the screenshot here
+    github: 'https://github.com/vaibhav-INDIE/RAG-for-excel-analysis', // <-- REPLACE with your GitHub repo link
+    demo: '/rag', // <-- REPLACE with your live Streamlit URL
+    category: 'AI',
+    date: '2025',
+    team: 'Solo Project',
+    achievements: ['Handles complex Excel structures with merged cells', 'Flexible data-to-text conversion strategies', 'Deployed on Streamlit Cloud with secure secret management'],
+    media: [
+      { type: 'video', url: '/projects/rag/demo.mp4', caption: 'Main Demo for document Q&A' },
+      { type: 'image', url: '/projects/rag/img1.jpg', caption: 'Main application interface for document Q&A' }
+    ]
+  },
+  {
     title: 'Hate Speech Recognition',
     description: 'Machine learning model for hate speech detection using patient data, achieving 96% accuracy on the Kaggle dataset.',
     longDescription: `A ANN model for hate speech detection using patient data, achieving 96% accuracy on the Kaggle dataset.\n\nKey Features:\n• 96% prediction accuracy\n• Feature importance analysis\n• Risk factor visualization\n• Comprehensive documentation`,
