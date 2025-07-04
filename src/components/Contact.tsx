@@ -26,8 +26,15 @@ const Contact = () => {
     setStatusMessage('Sending your message...')
 
     try {
-      // Use environment variable with fallback
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://whatsapp-approval-llm.onrender.com/contact';
+      // Get API base URL from environment variables
+      const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL;
+      
+      if (!apiBaseUrl) {
+        throw new Error('API URL is not configured. Please check your environment variables.');
+      }
+
+      // Ensure the URL ends with a single slash and append the endpoint
+      const apiUrl = `${apiBaseUrl.replace(/\/+$/, '')}/contact`;
 
       const response = await fetch(apiUrl, {
         method: 'POST',
