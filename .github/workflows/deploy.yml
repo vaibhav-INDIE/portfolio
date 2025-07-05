@@ -39,6 +39,8 @@ jobs:
         env:
           # This is an example, replace with your actual environment variables if needed
           NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+          NEXT_PUBLIC_LLM_INSTANCE: ${{ secrets.NEXT_PUBLIC_LLM_INSTANCE }}
+          NEXT_PUBLIC_LLM_INSTANCE2: ${{ secrets.NEXT_PUBLIC_LLM_INSTANCE2 }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
