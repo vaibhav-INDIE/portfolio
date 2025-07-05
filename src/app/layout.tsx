@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import Navigation from "../components/Navigation";
+import ChatWidget from "../components/ChatWidgetWrapper";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -40,6 +41,7 @@ export default function RootLayout({
         <Navigation />
         <main className="relative">
           {children}
+          <ChatWidget />
         </main>
       </body>
     </html>
