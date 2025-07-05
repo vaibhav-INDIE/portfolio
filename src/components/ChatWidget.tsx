@@ -138,7 +138,7 @@ export default function ChatWidget() {
     } catch (error: unknown) {
       console.error('Error in chat submission:', error);
       setConnectionError(true);
-      let errorMessage = 'I\'m having trouble connecting to the chat service. Please try again later.';
+      let errorMessage = 'I&apos;m having trouble connecting to the chat service. Please try again later.';
       if (error instanceof Error) {
         if (error.message.includes('Failed to fetch')) {
           errorMessage = 'Unable to connect to the chat service. The server might be down or you might be offline.';
@@ -186,9 +186,9 @@ export default function ChatWidget() {
             <div className="bg-gradient-to-r from-[rgba(var(--primary-rgb),0.1)] to-[rgba(var(--accent-rgb),0.15)] p-4 flex justify-between items-center border-b border-[rgba(var(--border),0.5)] shrink-0">
               <div className="flex flex-col">
                 <h3 className="font-medium text-lg bg-clip-text text-transparent bg-gradient-to-r from-[var(--primary)] to-[var(--accent)]">
-                  Vaibhav's AI Assistant
+                  Vaibhav&apos;s AI Assistant
                 </h3>
-                <p className="text-xs text-[rgba(255,255,255,0.5)]">Ask me about Vaibhav's work, skills, or projects.</p>
+                <p className="text-xs text-[rgba(255,255,255,0.5)]">Ask me about Vaibhav&apos;s work, skills, or projects.</p>
               </div>
               <button
                 onClick={() => setIsOpen(false)}
