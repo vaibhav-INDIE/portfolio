@@ -24,6 +24,25 @@ export default function ChatWidget() {
   useEffect(() => {
     scrollToBottom();
   }, [messages, isLoading]);
+  
+  // --- Start of Responsive Change: Lock body scroll when chat is open on mobile ---
+  useEffect(() => {
+    if (isOpen) {
+      // Check window width at the moment the chat is opened
+      if (window.innerWidth < 640) { // 640px is the 'sm' breakpoint
+        document.body.style.overflow = 'hidden';
+      }
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+
+    // Cleanup function to ensure scroll is restored when component unmounts
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isOpen]);
+  // --- End of Responsive Change ---
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,25 +50,16 @@ export default function ChatWidget() {
 
     const userMessage: Message = { role: 'user', content: input };
 
-    // --- Start of Fix ---
-    // The API is "context-aware," so we must send the entire conversation history.
-    // 1. Prepare the history to be sent to the API.
     const messagesToSend = [...messages, userMessage];
 
-    // 2. Update the UI optimistically with the user's message and a placeholder for the assistant's reply.
-    //    This is more efficient than two separate state updates.
     setMessages(prev => [...prev, userMessage, { role: 'assistant', content: '' }]);
-    // --- End of Fix ---
 
     setInput('');
     setIsLoading(true);
     setConnectionError(false);
 
     try {
-      // 3. Create the request body with the correct structure: { messages: [...] }
       const requestBody = { messages: messagesToSend };
-
-      // Function to try a fetch with a specific URL
       const tryFetch = async (url: string) => {
         const response = await fetch(url, {
           method: 'POST',
@@ -61,8 +71,6 @@ export default function ChatWidget() {
         });
         return response;
       };
-
-      // Try primary instance first, then fallback to the backup
       let response;
       try {
         response = await tryFetch(process.env.NEXT_PUBLIC_LLM_INSTANCE!);
@@ -75,13 +83,10 @@ export default function ChatWidget() {
           throw new Error('LLM service is currently offline. Please try again later.');
         }
       }
-
       if (!response.ok) {
-        // If API is not available, show a friendly message
         if (response.status === 0 || response.status >= 500) {
           throw new Error('Our AI assistant is currently offline. Please check back later or contact us directly.');
         }
-        // For other client errors, show a more specific message
         const errorText = await response.text().catch(() => 'Service unavailable');
         console.error('API Error:', {
           status: response.status,
@@ -90,41 +95,27 @@ export default function ChatWidget() {
         });
         throw new Error('The LLM is offline. Please try again later.');
       }
-      
       if (!response.body) {
         console.error('No response body received');
         throw new Error('We received an unexpected response. Please try again.');
       }
-
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
       let done = false;
-      let buffer = ''; // Buffer to hold incomplete stream chunks
-
+      let buffer = '';
       while (!done) {
         const { value, done: readerDone } = await reader.read();
         done = readerDone;
-        // Add the new chunk to our buffer
         buffer += decoder.decode(value, { stream: true });
-
-        // Process all complete "data: {...}" messages in the buffer
         const messages = buffer.split('\n\n');
-        
-        // The last part of the buffer might be an incomplete message, so we keep it.
-        buffer = messages.pop() || ''; 
-
+        buffer = messages.pop() || '';
         for (const message of messages) {
           if (message.startsWith('data: ')) {
             try {
-              // Get the JSON part and parse it
               const jsonString = message.substring(6);
               const parsedData = JSON.parse(jsonString);
-              
-              // Extract the actual content token
               const content = parsedData.messages[0]?.content;
-
               if (content) {
-                // Update the UI with the extracted content
                 setMessages(prevMessages => {
                   const lastMessage = prevMessages[prevMessages.length - 1];
                   if (lastMessage && lastMessage.role === 'assistant') {
@@ -144,24 +135,19 @@ export default function ChatWidget() {
           }
         }
       }
-
     } catch (error: unknown) {
       console.error('Error in chat submission:', error);
       setConnectionError(true);
-
       let errorMessage = 'I\'m having trouble connecting to the chat service. Please try again later.';
       if (error instanceof Error) {
         if (error.message.includes('Failed to fetch')) {
           errorMessage = 'Unable to connect to the chat service. The server might be down or you might be offline.';
         } else {
-          // Display the more specific API error
           errorMessage = `${error.message}`;
         }
       }
-
       setMessages(prevMessages => {
         const lastMessage = prevMessages[prevMessages.length - 1];
-        // Update the placeholder message with the error
         if (lastMessage && lastMessage.role === 'assistant' && lastMessage.content === '') {
           const updatedMessages = [...prevMessages];
           updatedMessages[updatedMessages.length - 1] = {
@@ -170,7 +156,6 @@ export default function ChatWidget() {
           };
           return updatedMessages;
         }
-        // Or add a new error message if something went wrong before the placeholder was added
         return [...prevMessages, { role: 'assistant', content: errorMessage }];
       });
     } finally {
@@ -179,23 +164,31 @@ export default function ChatWidget() {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-4">
+    // Use a React Fragment to wrap the independently positioned elements
+    <>
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+            initial={{ opacity: 0, y: 50, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            transition={{ type: 'spring', damping: 30, stiffness: 400 }}
-            className="w-[360px] h-[500px] bg-[rgb(var(--surface))] rounded-xl shadow-2xl flex flex-col overflow-hidden border border-[rgba(var(--border),0.5)] backdrop-blur-lg"
+            exit={{ opacity: 0, y: 50, scale: 0.9 }}
+            transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+            // --- Start of Responsive Change ---
+            // On mobile (default): full screen, no rounded corners.
+            // On sm screens and up: floating widget with rounded corners, positioned above the button.
+            className="fixed bottom-0 right-0 w-full h-full rounded-none
+                       sm:bottom-24 sm:right-6 sm:w-[360px] sm:h-[500px] sm:rounded-xl
+                       bg-[rgb(var(--surface))] shadow-2xl flex flex-col overflow-hidden 
+                       border border-[rgba(var(--border),0.5)] backdrop-blur-lg z-50"
+            // --- End of Responsive Change ---
           >
             {/* Header */}
-            <div className="bg-gradient-to-r from-[rgba(var(--primary-rgb),0.1)] to-[rgba(var(--accent-rgb),0.15)] p-4 flex justify-between items-center border-b border-[rgba(var(--border),0.5)]">
+            <div className="bg-gradient-to-r from-[rgba(var(--primary-rgb),0.1)] to-[rgba(var(--accent-rgb),0.15)] p-4 flex justify-between items-center border-b border-[rgba(var(--border),0.5)] shrink-0">
               <div className="flex flex-col">
                 <h3 className="font-medium text-lg bg-clip-text text-transparent bg-gradient-to-r from-[var(--primary)] to-[var(--accent)]">
-                  Vaibhav&apos;s AI Assistant
+                  Vaibhav's AI Assistant
                 </h3>
-                <p className="text-xs text-[rgba(255,255,255,0.5)]">Ask me about Vaibhav&apos;s work, skills, or projects.</p>
+                <p className="text-xs text-[rgba(255,255,255,0.5)]">Ask me about Vaibhav's work, skills, or projects.</p>
               </div>
               <button
                 onClick={() => setIsOpen(false)}
@@ -210,7 +203,7 @@ export default function ChatWidget() {
             <div className="flex-1 p-4 overflow-y-auto custom-scrollbar">
               <div className="space-y-4">
                 {messages.length === 0 ? (
-                  <div className="flex flex-col items-center justify-center h-[300px] text-center p-6">
+                  <div className="flex flex-col items-center justify-center h-full text-center p-6">
                     <div className={`w-16 h-16 rounded-full ${connectionError ? 'bg-red-500/10' : 'bg-[rgba(var(--primary-rgb),0.1]'} flex items-center justify-center mb-4`}>
                       {connectionError ? (
                         <FiX className="text-red-400" size={28} />
@@ -244,7 +237,6 @@ export default function ChatWidget() {
                         }`}
                       >
                         {message.content}
-                        {/* Display a blinking cursor for the last streaming message */}
                         {isLoading && message.role === 'assistant' && index === messages.length - 1 && (
                           <span className="inline-block w-2 h-4 bg-white animate-pulse ml-1"></span>
                         )}
@@ -257,7 +249,7 @@ export default function ChatWidget() {
             </div>
             
             {/* Input Form */}
-            <form onSubmit={handleSubmit} className="p-4 border-t border-[rgba(var(--border),0.5)] bg-[rgba(10,10,10,0.7)]">
+            <form onSubmit={handleSubmit} className="p-4 border-t border-[rgba(var(--border),0.5)] bg-[rgba(10,10,10,0.7)] shrink-0">
               <div className="flex gap-2">
                 <input
                   type="text"
@@ -285,11 +277,28 @@ export default function ChatWidget() {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen(!isOpen)}
-        className="bg-gradient-to-r from-[var(--primary)] to-[var(--accent)] text-white p-4 rounded-full shadow-lg hover:shadow-[0_0_20px_rgba(157,127,234,0.3)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:ring-offset-2 focus:ring-offset-[var(--background)] transition-all"
         aria-label={isOpen ? 'Close chat' : 'Open chat'}
+        // --- Start of Responsive Change ---
+        // Positioned independently. Different padding from edge on mobile vs desktop.
+        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 
+                   bg-gradient-to-r from-[var(--primary)] to-[var(--accent)] text-white p-4 rounded-full 
+                   shadow-lg hover:shadow-[0_0_20px_rgba(157,127,234,0.3)] 
+                   focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:ring-offset-2 focus:ring-offset-[var(--background)] 
+                   transition-all z-50"
+        // --- End of Responsive Change ---
       >
-        {isOpen ? <FiX size={24} /> : <FiMessageSquare size={24} />}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={isOpen ? 'close' : 'open'}
+            initial={{ opacity: 0, rotate: -30, y: 5 }}
+            animate={{ opacity: 1, rotate: 0, y: 0 }}
+            exit={{ opacity: 0, rotate: 30, y: 5 }}
+            transition={{ duration: 0.2 }}
+          >
+            {isOpen ? <FiX size={24} /> : <FiMessageSquare size={24} />}
+          </motion.div>
+        </AnimatePresence>
       </motion.button>
-    </div>
+    </>
   );
 }
