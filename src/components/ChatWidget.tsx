@@ -25,35 +25,27 @@ export default function ChatWidget() {
     scrollToBottom();
   }, [messages, isLoading]);
   
-  // --- Start of Responsive Change: Lock body scroll when chat is open on mobile ---
   useEffect(() => {
     if (isOpen) {
-      // Check window width at the moment the chat is opened
-      if (window.innerWidth < 640) { // 640px is the 'sm' breakpoint
+      if (window.innerWidth < 640) {
         document.body.style.overflow = 'hidden';
       }
     } else {
       document.body.style.overflow = 'auto';
     }
-
-    // Cleanup function to ensure scroll is restored when component unmounts
     return () => {
       document.body.style.overflow = 'auto';
     };
   }, [isOpen]);
-  // --- End of Responsive Change ---
-
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
 
     const userMessage: Message = { role: 'user', content: input };
-
     const messagesToSend = [...messages, userMessage];
 
     setMessages(prev => [...prev, userMessage, { role: 'assistant', content: '' }]);
-
     setInput('');
     setIsLoading(true);
     setConnectionError(false);
@@ -138,7 +130,7 @@ export default function ChatWidget() {
     } catch (error: unknown) {
       console.error('Error in chat submission:', error);
       setConnectionError(true);
-      let errorMessage = 'I&apos;m having trouble connecting to the chat service. Please try again later.';
+      let errorMessage = 'I am having trouble connecting to the chat service. Please try again later.';
       if (error instanceof Error) {
         if (error.message.includes('Failed to fetch')) {
           errorMessage = 'Unable to connect to the chat service. The server might be down or you might be offline.';
@@ -164,7 +156,6 @@ export default function ChatWidget() {
   };
 
   return (
-    // Use a React Fragment to wrap the independently positioned elements
     <>
       <AnimatePresence>
         {isOpen && (
@@ -173,22 +164,18 @@ export default function ChatWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 50, scale: 0.9 }}
             transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-            // --- Start of Responsive Change ---
-            // On mobile (default): full screen, no rounded corners.
-            // On sm screens and up: floating widget with rounded corners, positioned above the button.
             className="fixed bottom-0 right-0 w-full h-full rounded-none
                        sm:bottom-24 sm:right-6 sm:w-[360px] sm:h-[500px] sm:rounded-xl
                        bg-[rgb(var(--surface))] shadow-2xl flex flex-col overflow-hidden 
                        border border-[rgba(var(--border),0.5)] backdrop-blur-lg z-50"
-            // --- End of Responsive Change ---
           >
             {/* Header */}
             <div className="bg-gradient-to-r from-[rgba(var(--primary-rgb),0.1)] to-[rgba(var(--accent-rgb),0.15)] p-4 flex justify-between items-center border-b border-[rgba(var(--border),0.5)] shrink-0">
               <div className="flex flex-col">
                 <h3 className="font-medium text-lg bg-clip-text text-transparent bg-gradient-to-r from-[var(--primary)] to-[var(--accent)]">
-                  Vaibhav&apos;s AI Assistant
+                  Vaibhav's AI Assistant
                 </h3>
-                <p className="text-xs text-[rgba(255,255,255,0.5)]">Ask me about Vaibhav&apos;s work, skills, or projects.</p>
+                <p className="text-xs text-[rgba(255,255,255,0.5)]">Ask me about Vaibhav's work, skills, or projects.</p>
               </div>
               <button
                 onClick={() => setIsOpen(false)}
@@ -272,33 +259,36 @@ export default function ChatWidget() {
         )}
       </AnimatePresence>
       
-      {/* Toggle Button */}
-      <motion.button
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        onClick={() => setIsOpen(!isOpen)}
-        aria-label={isOpen ? 'Close chat' : 'Open chat'}
-        // --- Start of Responsive Change ---
-        // Positioned independently. Different padding from edge on mobile vs desktop.
-        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 
-                   bg-gradient-to-r from-[var(--primary)] to-[var(--accent)] text-white p-4 rounded-full 
-                   shadow-lg hover:shadow-[0_0_20px_rgba(157,127,234,0.3)] 
-                   focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:ring-offset-2 focus:ring-offset-[var(--background)] 
-                   transition-all z-50"
-        // --- End of Responsive Change ---
-      >
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={isOpen ? 'close' : 'open'}
-            initial={{ opacity: 0, rotate: -30, y: 5 }}
-            animate={{ opacity: 1, rotate: 0, y: 0 }}
-            exit={{ opacity: 0, rotate: 30, y: 5 }}
-            transition={{ duration: 0.2 }}
+      {/* --- Start of Fix --- */}
+      {/*
+        The toggle button is now wrapped in its own AnimatePresence component.
+        It is only rendered when the chat is NOT open (`!isOpen`).
+        This prevents it from overlapping with the full-screen chat window on mobile.
+        The complex icon-swapping animation has been replaced with a simpler, cleaner
+        enter/exit animation for the button itself.
+      */}
+      <AnimatePresence>
+        {!isOpen && (
+          <motion.button
+            initial={{ opacity: 0, y: 20, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.9 }}
+            transition={{ type: "spring", damping: 25, stiffness: 350 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => setIsOpen(true)}
+            aria-label="Open chat"
+            className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 
+                       bg-gradient-to-r from-[var(--primary)] to-[var(--accent)] text-white p-4 rounded-full 
+                       shadow-lg hover:shadow-[0_0_20px_rgba(157,127,234,0.3)] 
+                       focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:ring-offset-2 focus:ring-offset-[var(--background)] 
+                       transition-all z-50"
           >
-            {isOpen ? <FiX size={24} /> : <FiMessageSquare size={24} />}
-          </motion.div>
-        </AnimatePresence>
-      </motion.button>
+            <FiMessageSquare size={24} />
+          </motion.button>
+        )}
+      </AnimatePresence>
+      {/* --- End of Fix --- */}
     </>
   );
 }

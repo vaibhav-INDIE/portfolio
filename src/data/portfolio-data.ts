@@ -456,9 +456,9 @@ export const projects: Project[] = [
   },
   {
   title: 'Developer Portfolio Website',
-  description: 'A dynamic personal portfolio showcasing my projects, experience, skills and animated components.',
+  description: 'A dynamic personal portfolio showcasing my projects, experience, skills and animated components with Personal Chatbot.',
   longDescription: `Built a fully responsive portfolio website to highlight my work, achievements, and certifications.\n\nKey Features:\n• Project cards with media gallery\n• Custom 404 page and smooth animations using Framer Motion\n• Integrated GitHub, LinkedIn, Mail links\n• Deployed via GitHub Pages with custom domain\n• Dark mode and responsive design for all devices`,
-  tags: ['Next.js','React' ,'TailwindCSS', 'Framer Motion', 'GitHub Pages'],
+  tags: ['Next.js','React' ,'TailwindCSS', 'Framer Motion', 'GitHub Pages','TinyLlama','MlOps','Dynamic Website'],
   technologies: ['Full Stack', 'Frontend', 'Portfolio', 'Deployment'],
   image: '/projects/website/out.jpg',
   github: 'https://github.com/vaibhav-INDIE/portfolio',
@@ -468,7 +468,9 @@ export const projects: Project[] = [
   team: 'Solo Project',
   achievements: ['Custom Domain Setup', '3D-style UX with Framer Motion'],
   media: [
-      { type: 'video', url: '/projects/website/example.mp4', caption: 'Model Performance Metrics' }
+      { type: 'video', url: '/projects/website/example.mp4', caption: 'Model Performance Metrics'},
+      { type: 'image', url: '/projects/website/explain.png', caption: 'Tech stack used'}
+
       
     ]
 }
